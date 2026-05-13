@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Admin — Caribbean Landing Page</title>
+
+<!--
+=========================================================================
+  ADMIN DASHBOARD
+  -------------------------------------------------------------------
+  Default password: rohan2026   ← CHANGE THIS IMMEDIATELY via the
+                                  Settings tab after your first login.
+  Notes:
+    • Drafts auto-save in your browser (localStorage). Nothing is
+      uploaded anywhere until you copy the generated config block
+      and paste it into index.html via GitHub's web editor.
+    • The Submissions tab shows email captures stored locally on this
+      device. For the full list, open your Google Sheet.
+=========================================================================
+-->
+
+<style>
+  :root {
+    --sea:        #003D5B;
+    --teal:       #00696F;
+    --teal-deep:  #004D52;
+    --coral:      #C44536;
+    --amber:      #B5651D;
+    --gold:       #F4C430;
+    --palm:       #1F6B41;
+    --sand:       #FFF8EC;
+    --ink:        #0A1F2E;
+    --ink-soft:   #3D4F5C;
+    --line:       #D8E1E7;
+    --white:      #FFFFFF;
+    --radius:     14px;
+    --shadow:     0 6px 20px rgba(10,31,46,0.10);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Nunito', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    background: var(--sand);
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  h1, h2, h3 { margin: 0 0 0.4em; color: var(--ink); }
+  h1 { font-size: 1.4rem; }
+  h2 { font-size: 1.2rem; }
+  h3 { font-size: 1.0rem; }
+  p { margin: 0 0 0.8em; }
+  a { color: var(--teal); }
+  *:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; border-radius: 6px; }
+
+  /* ===== LOGIN ===== */
+  .lock-screen {
+    min-height: 100vh;
+    display: grid; place-items: center;
+    padding: 24px;
+    background: linear-gradient(135deg, #003D5B 0%, #00696F 100%);
+  }
+  .lock-card {
+    width: 100%; max-width: 380px;
+    background: var(--white);
+    border-radius: 18px;
+    padding: 32px 28px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+    text-align: center;
+  }
+  .lock-card h1 { font-size: 1.4rem; }
+  .lock-card .lock-icon {
+    font-size: 38px;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .lock-card input {
+    width: 100%; padding: 12px 14px;
+    font-size: 1rem; font-family: inherit;
+    border: 1.5px solid var(--line);
+    border-radius: 10px; margin: 12px 0;
+  }
+  .lock-card input:focus { border-color: var(--teal); outline: none; }
+  .lock-card .err { color: var(--coral); font-size: 0.9rem; min-height: 1.1em; margin-bottom: 8px; }
+  .lock-card .btn {
+    background: var(--teal); color: white;
+    border: none; padding: 12px 20px;
+    border-radius: 999px; font-weight: 800; font-size: 1rem;
+    cursor: pointer; width: 100%;
+  }
+  .lock-card .btn:hover { background: var(--teal-deep); }
+  .lock-card .note { font-size: 0.78rem; color: var(--ink-soft); margin-top: 14px; }
+
+  /* ===== APP SHELL ===== */
+  .app { display: none; }
+  .app.visible { display: block; }
+  header.bar {
+    background: var(--sea);
+    color: white;
+    padding: 14px 20px;
+    display: flex; align-items: center; gap: 12px;
+    box-shadow: var(--shadow);
+    flex-wrap: wrap;
+  }
+  header.bar .brand { font-weight: 800; letter-spacing: 0.03em; flex: 1; }
+  header.bar .brand small { display: block; font-weight: 400; opacity: 0.75; font-size: 0.78rem; }
+  header.bar .logout {
+    background: rgba(255,255,255,0.12); color: white;
+    border: 1px solid rgba(255,255,255,0.25); border-radius: 999px;
+    padding: 6px 14px; cursor: pointer; font-weight: 700;
+  }
+  header.bar .logout:hover { background: rgba(255,255,255,0.22); }
+
+  nav.tabs {
+    background: var(--white);
+    border-bottom: 1px solid var(--line);
+    padding: 0 12px;
+    display: flex; gap: 4px; overflow-x: auto;
+  }
+  nav.tabs button {
+    background: transparent; border: none;
+    padding: 14px 16px;
+    font-family: inherit; font-size: 0.95rem; font-weight: 700;
+    color: var(--ink-soft); cursor: pointer;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+  }
+  nav.tabs button:hover { color: var(--teal); }
+  nav.tabs button.active { color: var(--teal-deep); border-bottom-color: var(--teal); }
+
+  main { padding: 24px 20px 80px; max-width: 1080px; margin: 0 auto; }
+  .panel { display: none; }
+  .panel.active { display: block; animation: fade 0.2s ease; }
+  @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+  .card {
+    background: white; border-radius: var(--radius);
+    padding: 22px; box-shadow: var(--shadow);
+    margin-bottom: 16px;
+  }
+  .card h2 { display: flex; align-items: center; gap: 8px; }
+  .card .help { color: var(--ink-soft); font-size: 0.92rem; }
+
+  label { display: block; font-weight: 700; font-size: 0.9rem; color: var(--ink); margin: 12px 0 4px; }
+  input[type="text"], input[type="url"], input[type="email"], input[type="password"], textarea, select {
+    width: 100%; padding: 10px 12px;
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    font-family: inherit; font-size: 1rem;
+    background: white; color: var(--ink);
+  }
+  textarea { min-height: 90px; resize: vertical; }
+  input:focus, textarea:focus, select:focus { border-color: var(--teal); outline: none; }
+  .field-hint { font-size: 0.8rem; color: var(--ink-soft); margin-top: 4px; }
+
+  .row { display: flex; gap: 14px; flex-wrap: wrap; }
+  .row > * { flex: 1 1 240px; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 10px 18px;
+    border: none; border-radius: 999px;
+    font-family: inherit; font-weight: 800; font-size: 0.95rem;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .btn-primary { background: var(--teal); color: white; }
+  .btn-primary:hover { background: var(--teal-deep); transform: translateY(-1px); }
+  .btn-coral   { background: var(--coral); color: white; }
+  .btn-coral:hover { background: #A53A2D; transform: translateY(-1px); }
+  .btn-ghost   { background: transparent; color: var(--ink-soft); border: 1.5px solid var(--line); }
+  .btn-ghost:hover { background: var(--sand); color: var(--ink); }
+  .btn-danger  { background: transparent; color: var(--coral); border: 1.5px solid var(--coral); }
+  .btn-danger:hover { background: var(--coral); color: white; }
+
+  .toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 12px; }
+
+  /* ===== List items ===== */
+  .list-item {
+    background: var(--sand);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+  .list-item.dragging { opacity: 0.4; }
+  .list-item-head {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 8px;
+  }
+  .list-item-head .handle { cursor: grab; font-size: 1.2rem; color: var(--ink-soft); user-select: none; }
+  .list-item-head .num { font-weight: 800; color: var(--teal-deep); min-width: 22px; }
+  .list-item-head .title { font-weight: 800; flex: 1; }
+  .list-item-head .actions { display: flex; gap: 6px; }
+  .icon-btn {
+    background: white; border: 1px solid var(--line);
+    width: 30px; height: 30px; border-radius: 8px;
+    cursor: pointer; font-size: 0.95rem; line-height: 1;
+    display: grid; place-items: center;
+  }
+  .icon-btn:hover { background: var(--sand); }
+  .icon-btn.danger { color: var(--coral); border-color: var(--coral); }
+  .icon-btn.danger:hover { background: var(--coral); color: white; }
+
+  .badge {
+    display: inline-block; padding: 3px 9px;
+    background: var(--teal); color: white;
+    font-size: 0.72rem; font-weight: 800; letter-spacing: 0.05em;
+    text-transform: uppercase; border-radius: 999px;
+  }
+  .badge-warn { background: var(--amber); }
+  .badge-ok   { background: var(--palm); }
+  .badge-off  { background: #8aa0ad; }
+
+  /* ===== Tables ===== */
+  table.signups { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.92rem; }
+  table.signups th, table.signups td {
+    border-bottom: 1px solid var(--line);
+    padding: 8px 10px; text-align: left; vertical-align: top;
+  }
+  table.signups th { background: var(--sand); font-weight: 800; }
+
+  /* ===== Code block ===== */
+  pre.code {
+    background: var(--ink);
+    color: #e0f2f0;
+    padding: 16px;
+    border-radius: 10px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.85rem;
+    overflow: auto;
+    max-height: 480px;
+    line-height: 1.4;
+    white-space: pre;
+    user-select: all;
+  }
+  .copied { color: var(--palm); font-weight: 800; margin-left: 10px; }
+
+  .stat-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px; margin-top: 4px;
+  }
+  .stat {
+    background: var(--sand); border-radius: 12px; padding: 14px 16px;
+  }
+  .stat .num { font-size: 1.6rem; font-weight: 900; color: var(--teal-deep); }
+  .stat .lab { font-size: 0.8rem; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .modal-back {
+    position: fixed; inset: 0; background: rgba(10,31,46,0.7);
+    display: none; align-items: center; justify-content: center;
+    z-index: 100; padding: 20px;
+  }
+  .modal-back.open { display: flex; }
+  .modal-box {
+    background: white; border-radius: 16px; padding: 24px;
+    max-width: 520px; width: 100%; box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+  }
+
+  @media (max-width: 600px) {
+    .row > * { flex: 1 1 100%; }
+    header.bar { padding: 12px 14px; }
+    main { padding: 18px 14px 70px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<div class="lock-screen" id="lock-screen">
+  <div class="lock-card">
+    <div class="lock-icon">🔒</div>
+    <h1>Admin login</h1>
+    <p class="help" style="color:#6a7d8a; font-size:0.9rem; margin: 4px 0 14px;">
+      Enter your admin password to manage the landing page.
+    </p>
+    <form id="login-form" autocomplete="off">
+      <input type="password" id="login-password" placeholder="Password" autocomplete="current-password" required />
+      <p class="err" id="login-err"></p>
+      <button type="submit" class="btn">Unlock</button>
+    </form>
+    <p class="note">Default password is in the top of admin.html. Change it via Settings after login.</p>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div class="app" id="app">
+  <header class="bar">
+    <div class="brand">
+      Admin Dashboard
+      <small id="who-bar"></small>
+    </div>
+    <button class="logout" onclick="logout()">Lock 🔒</button>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button data-tab="dash"   class="active">📊 Dashboard</button>
+    <button data-tab="site">🏝️ Site</button>
+    <button data-tab="video">🎬 Video</button>
+    <button data-tab="apps">🧩 Apps</button>
+    <button data-tab="frameworks">🧰 Frameworks</button>
+    <button data-tab="books">📚 Books</button>
+    <button data-tab="pdfs">📄 PDFs</button>
+    <button data-tab="signups">📧 Submissions</button>
+    <button data-tab="generate">⚡ Generate</button>
+    <button data-tab="settings">⚙️ Settings</button>
+  </nav>
+
+  <main>
+
+    <!-- ===== DASHBOARD ===== -->
+    <section class="panel active" data-panel="dash">
+      <div class="card">
+        <h2>Welcome 👋</h2>
+        <p class="help">Edit the site, manage videos, apps, and PDFs, then go to <b>Generate</b> to produce a fresh config to paste into <code>index.html</code> on GitHub.</p>
+        <div class="stat-grid">
+          <div class="stat"><div class="num" id="stat-apps">0</div><div class="lab">Apps</div></div>
+          <div class="stat"><div class="num" id="stat-frameworks">0</div><div class="lab">Frameworks</div></div>
+          <div class="stat"><div class="num" id="stat-books">0</div><div class="lab">Books</div></div>
+          <div class="stat"><div class="num" id="stat-pdfs">0</div><div class="lab">PDFs</div></div>
+          <div class="stat"><div class="num" id="stat-video">—</div><div class="lab">Video</div></div>
+          <div class="stat"><div class="num" id="stat-signups">0</div><div class="lab">Local sign-ups</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Quick start</h2>
+        <ol class="help" style="padding-left: 20px;">
+          <li>Tweak content in the <b>Site / Video / Apps / PDFs</b> tabs.</li>
+          <li>Open the <b>Generate</b> tab and click <b>Copy config</b>.</li>
+          <li>On GitHub, open <code>index.html</code>, click ✏️ Edit, replace everything between <code>&lt;!-- CONFIG-START --&gt;</code> and <code>&lt;!-- CONFIG-END --&gt;</code>, and commit.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== SITE ===== -->
+    <section class="panel" data-panel="site">
+      <div class="card">
+        <h2>🏝️ Site branding & copy</h2>
+        <label>Site name (browser tab + footer)</label>
+        <input type="text" id="f-site-name" />
+
+        <label>Tagline chip (top of hero)</label>
+        <input type="text" id="f-site-tagline" />
+        <div class="field-hint">Tip: keep flag emojis here for that Caribbean welcome row.</div>
+
+        <label>Hero accent script (cursive accent above the title)</label>
+        <input type="text" id="f-site-heroscript" />
+
+        <label>Hero title (the big H1)</label>
+        <input type="text" id="f-site-herotitle" />
+
+        <label>Hero lead paragraph</label>
+        <textarea id="f-site-herolead"></textarea>
+
+        <label>About section text</label>
+        <textarea id="f-site-abouttext"></textarea>
+
+        <label>Google Sheets endpoint URL (where signup emails go)</label>
+        <input type="url" id="f-site-sheets" placeholder="https://script.google.com/macros/s/.../exec" />
+        <div class="field-hint">See <code>GOOGLE-SHEETS-SETUP.md</code> for the 10-minute setup. Leave blank if you don't want sheet capture yet.</div>
+
+        <div class="toolbar">
+          <button class="btn btn-primary" onclick="saveDraft()">💾 Save draft</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== VIDEO ===== -->
+    <section class="panel" data-panel="video">
+      <div class="card">
+        <h2>🎬 Video of the Week</h2>
+        <div class="row">
+          <div>
+            <label>Enable this section?</label>
+            <select id="f-video-enabled">
+              <option value="true">Show on landing page</option>
+              <option value="false">Hide the whole section</option>
+            </select>
+          </div>
+          <div>
+            <label>Source</label>
+            <select id="f-video-type">
+              <option value="youtube">YouTube</option>
+              <option value="vimeo">Vimeo</option>
+              <option value="file">Direct .mp4 file</option>
+            </select>
+          </div>
+        </div>
+        <label>Title</label>
+        <input type="text" id="f-video-title" />
+        <label>Description</label>
+        <textarea id="f-video-desc"></textarea>
+        <label>Video ID / URL</label>
+        <input type="text" id="f-video-id" placeholder="e.g. OLQok77eGwM" />
+        <div class="field-hint">
+          YouTube: the bit after <code>youtu.be/</code> or <code>?v=</code>.<br/>
+          Vimeo: the numeric video ID. File: the full URL to the .mp4.
+        </div>
+        <label>Poster image URL (optional — auto from YouTube if blank)</label>
+        <input type="url" id="f-video-poster" />
+
+        <div class="toolbar">
+          <button class="btn btn-primary" onclick="saveDraft()">💾 Save draft</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== APPS ===== -->
+    <section class="panel" data-panel="apps">
+      <div class="card">
+        <h2>🧩 Apps <span class="badge" id="apps-count">0</span></h2>
+        <p class="help">Drag the ☰ handle to reorder. Each card on the page shows the image + name + description only; the underlying link is hidden until the visitor clicks.</p>
+        <div id="apps-list"></div>
+        <div class="toolbar">
+          <button class="btn btn-primary" onclick="addApp()">＋ Add app</button>
+          <button class="btn btn-ghost" onclick="saveDraft()">💾 Save draft</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FRAMEWORKS ===== -->
+    <section class="panel" data-panel="frameworks">
+      <div class="card">
+        <h2>🧰 Frameworks &amp; Tools <span class="badge" id="frameworks-count">0</span></h2>
+        <p class="help">External resources (Google Docs, Sheets, etc.) that open in a new tab after the email gate. Use the Drive thumbnail URL <code>https://drive.google.com/thumbnail?id=DOC_ID&amp;sz=w800</code> for cover images.</p>
+        <div id="frameworks-list"></div>
+        <div class="toolbar">
+          <button class="btn btn-primary" onclick="addFramework()">＋ Add framework</button>
+          <button class="btn btn-ghost" onclick="saveDraft()">💾 Save draft</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== BOOKS ===== -->
+    <section class="panel" data-panel="books">
+      <div class="card">
+        <h2>📚 Books <span class="badge" id="books-count">0</span></h2>
+        <p class="help">Published books. Leave the <b>Image URL</b> blank for a styled fallback cover that shows the title, subtitle, and author. The <b>Tone</b> field changes the fallback gradient.</p>
+        <div id="books-list"></div>
+        <div class="toolbar">
+          <button class="btn btn-primary" onclick="addBook()">＋ Add book</button>
+          <button class="btn btn-ghost" onclick="saveDraft()">💾 Save draft</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PDFs ===== -->
+    <section class="panel" data-panel="pdfs">
+      <div class="card">
+        <h2>📄 PDFs <span class="badge" id="pdfs-count">0</span></h2>
+        <p class="help">PDFs render in a custom viewer with downloads disabled. Host the .pdf alongside index.html on GitHub or any CORS-friendly host.</p>
+        <div id="pdfs-list"></div>
+        <div class="toolbar">
+          <button class="btn btn-primary" onclick="addPdf()">＋ Add PDF</button>
+          <button class="btn btn-ghost" onclick="saveDraft()">💾 Save draft</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SIGN-UPS ===== -->
+    <section class="panel" data-panel="signups">
+      <div class="card">
+        <h2>📧 Submissions</h2>
+        <p class="help">
+          For the full searchable list, open your Google Sheet (the destination you set in <b>Site → Sheets endpoint</b>).
+          The table below is a preview of submissions captured on <em>this</em> browser only (admin previews + visits from this device).
+        </p>
+        <div class="toolbar" style="margin-bottom:14px;">
+          <button class="btn btn-primary" onclick="openSheet()">📋 Open Google Sheet</button>
+          <button class="btn btn-ghost" onclick="exportSignupsCSV()">⬇️ Export local previews (CSV)</button>
+          <button class="btn btn-danger" onclick="clearLocalSignups()">🗑️ Clear local previews</button>
+        </div>
+        <div id="signups-table-wrap"></div>
+      </div>
+    </section>
+
+    <!-- ===== GENERATE ===== -->
+    <section class="panel" data-panel="generate">
+      <div class="card">
+        <h2>⚡ Generate config block</h2>
+        <p class="help">Copy the block below, then on GitHub: open <code>index.html</code>, click ✏️ Edit, find the lines <code>&lt;!-- CONFIG-START --&gt;</code> and <code>&lt;!-- CONFIG-END --&gt;</code>, replace everything between them (inclusive of both markers if you copied them — they're already included), and commit. GitHub Pages will redeploy automatically.</p>
+        <div class="toolbar">
+          <button class="btn btn-primary" onclick="generateConfig()">🔄 Generate</button>
+          <button class="btn btn-coral" onclick="copyConfig()">📋 Copy config</button>
+          <span class="copied" id="copy-flag" style="display:none;">✓ Copied</span>
+        </div>
+        <pre class="code" id="config-output" aria-live="polite">Click Generate to produce the config block.</pre>
+      </div>
+    </section>
+
+    <!-- ===== SETTINGS ===== -->
+    <section class="panel" data-panel="settings">
+      <div class="card">
+        <h2>⚙️ Change password</h2>
+        <p class="help">Generate a new password hash. After the new hash appears, open <code>admin.html</code> on GitHub, replace the value of <code>PASSWORD_HASH</code> near the top, and commit. The next login will require the new password.</p>
+        <label>New password (min 8 chars)</label>
+        <input type="password" id="pw-new" />
+        <label>Confirm new password</label>
+        <input type="password" id="pw-confirm" />
+        <p class="err" id="pw-err" style="color:var(--coral);"></p>
+        <div class="toolbar">
+          <button class="btn btn-primary" onclick="generateNewHash()">🔐 Generate hash</button>
+        </div>
+        <div id="pw-output" style="display:none; margin-top:14px;">
+          <p class="help">Paste this exact line into <code>admin.html</code> near the top, replacing the existing <code>PASSWORD_HASH</code> line:</p>
+          <pre class="code" id="pw-hash-line"></pre>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>📦 Backup & restore drafts</h2>
+        <p class="help">Drafts auto-save to this browser. Use these tools to back them up, transfer to another device, or restore from a file.</p>
+        <div class="toolbar">
+          <button class="btn btn-primary" onclick="exportDraftJson()">⬇️ Download draft (JSON)</button>
+          <label class="btn btn-ghost" style="cursor:pointer;">
+            ⬆️ Import draft JSON
+            <input type="file" accept="application/json" style="display:none;" onchange="importDraftJson(event)" />
+          </label>
+          <button class="btn btn-danger" onclick="resetDraft()">↺ Reset to defaults</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ============ MODAL ============ -->
+<div class="modal-back" id="modal">
+  <div class="modal-box">
+    <h2 id="modal-title">Confirm</h2>
+    <p id="modal-body" class="help"></p>
+    <div class="toolbar" style="justify-content:flex-end;">
+      <button class="btn btn-ghost" onclick="closeModal(false)">Cancel</button>
+      <button class="btn btn-coral" onclick="closeModal(true)" id="modal-ok">Confirm</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+/* =========================================================================
+   PASSWORD — change this hash via the Settings tab after first login.
+   Default password: rohan2026
+========================================================================= */
+const PASSWORD_HASH = "9407b28cf7f7eed483e1ed5360cfe97235891b14d6a1b687c91904dbe6a5ec7b";
+
+
+/* =========================================================================
+   DEFAULTS — initial seed for the first time the admin loads.
+   Once you generate a new config and push it to GitHub, your draft here
+   stays in sync automatically.
+========================================================================= */
+const DEFAULTS = {
+  SITE: {
+    name:           "Island Mind Lab",
+    tagline:        "🇯🇲 🇹🇹 🇧🇧 🇬🇾 🇱🇨 🇧🇸 Across the Caribbean Region",
+    heroScript:     "Dr. Rohan Jowallah",
+    heroTitle:      "AI for Caribbean Education, Workforce & Policy",
+    heroLead:       "Original tools, publications, and talks that put Caribbean learners, educators, and institutions at the centre of the AI conversation.",
+    aboutText:      "An advisory and design practice producing original AI-powered tools, publications, and talks for Caribbean education, workforce development, and policy.",
+    sheetsEndpoint: ""
+  },
+  VIDEO_OF_WEEK: {
+    enabled:     true,
+    title:       "Video of the Week",
+    description: "This week's featured reel — click play to watch.",
+    type:        "youtube",
+    id:          "OLQok77eGwM",
+    poster:      ""
+  },
+  APPS: [
+    { name: "Sovereign Learning Designer",       description: "Design learner-centred, culturally-rooted course experiences that honour student voice and agency.", image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=900&q=80", url: "https://sovereign-learning-designer.vercel.app/", ribbon: "Flagship" },
+    { name: "AI Literacy Framework",             description: "A structured framework to grow AI literacy across staff, faculty, and learners — from first principles to applied practice.", image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=900&q=80", url: "https://ai-literacy-framework.vercel.app/", ribbon: "" },
+    { name: "Caribbean EduReport AI",            description: "Turn raw classroom and institutional data into clear, decision-ready education reports for Caribbean leaders.", image: "https://images.unsplash.com/photo-1551836022-deb4988cc6c0?w=900&q=80", url: "https://caribbean-edureport-ai.vercel.app/login", ribbon: "" },
+    { name: "Jamaica National Literacy",         description: "A literacy companion built around Jamaican learners — phonics, fluency, and comprehension with local voices.", image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=900&q=80", url: "https://jamnationaljamaica-literacy-lxwmot4mw-rj952s-projects.vercel.app/", ribbon: "Jamaica" },
+    { name: "Caribbean AI Implementation Planner", description: "A step-by-step planner for schools, universities, and ministries rolling out AI responsibly across the region.", image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=900&q=80", url: "https://caribbean-ai-implementation-planner.vercel.app/", ribbon: "" },
+    { name: "Pedagogical Integrity Planner",     description: "Redesign assessments and learning tasks so that academic integrity holds firm in the age of generative AI.", image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=900&q=80", url: "https://pedagogical-integrity-planner.vercel.app/", ribbon: "" },
+    { name: "AI-Ready Workforce Companion",      description: "Help workers and TVET learners build the human + AI skills employers across the Caribbean are now hiring for.", image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=900&q=80", url: "https://ai-ready-workforce-companion.vercel.app/", ribbon: "" },
+    { name: "Freirean Assessment Designer",      description: "Design assessments grounded in Paulo Freire's problem-posing pedagogy — dialogical, critical, and emancipatory.", image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=900&q=80", url: "https://freirean-assessment-designer.vercel.app/", ribbon: "" },
+    { name: "CompetencyFolio",                   description: "Build, evidence, and showcase stackable competencies — a portfolio-led credential builder for modern learners.", image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=900&q=80", url: "https://competencyfolio.vercel.app/", ribbon: "New" }
+  ],
+  FRAMEWORKS: [
+    {
+      name: "The CARE Framework — Ethical AI Decision-Making Worksheet",
+      description: "A guided worksheet for faculty to make ethical, evidence-informed decisions about integrating AI into teaching and learning. Walks through stakeholder analysis, bias examination, values alignment, and impact evaluation.",
+      image: "https://drive.google.com/thumbnail?id=1CT6QbLJkXU2YySp4xhKyUM99gGx6vfhtPvsA4egjeZQ&sz=w800",
+      url:   "https://docs.google.com/document/d/1CT6QbLJkXU2YySp4xhKyUM99gGx6vfhtPvsA4egjeZQ/edit?usp=sharing",
+      kind:  "doc",
+      ribbon: "Framework"
+    },
+    {
+      name: "AI Ready — Literacy Diagnostic",
+      description: "A practical workbook for assessing and building AI readiness and literacy across an institution or team.",
+      image: "https://drive.google.com/thumbnail?id=1pRiGe3z4jL460HLsUFwPaq9MJxPUNeKG&sz=w800",
+      url:   "https://docs.google.com/spreadsheets/d/1pRiGe3z4jL460HLsUFwPaq9MJxPUNeKG/edit?usp=sharing",
+      kind:  "sheet",
+      ribbon: "Diagnostic"
+    }
+  ],
+  BOOKS: [
+    {
+      title: "AI, Pedagogy, and Inclusion",
+      subtitle: "Shaping Pedagogy for a Changing World",
+      author: "Dr. Rohan Jowallah",
+      year: "",
+      image: "https://m.media-amazon.com/images/I/71rrFUMxPPL._SL1500_.jpg",
+      url: "https://www.amazon.com/s?k=AI+Pedagogy+Inclusion+Rohan+Jowallah",
+      tone: "navy",
+      description: "A practical and theoretical companion for educators reshaping classrooms in the age of artificial intelligence."
+    },
+    {
+      title: "Organizational Inclusivity",
+      subtitle: "Critical Reflection for Transformation",
+      author: "Dr. Rohan Jowallah",
+      year: "",
+      image: "https://m.media-amazon.com/images/I/61BjkrNaoPL._SY425_.jpg",
+      url: "https://www.amazon.com/s?k=Organizational+Inclusivity+Rohan+Jowallah",
+      tone: "coral",
+      description: "A field guide for leaders building genuinely inclusive workplaces."
+    },
+    {
+      title: "AI-Ready",
+      subtitle: "A Complete Workforce Guide to Working, Leading, and Thriving in the Age of Artificial Intelligence",
+      author: "Dr. Rohan Jowallah, Ed.D",
+      year: "",
+      image: "https://m.media-amazon.com/images/I/41H4nK8diOL._SY445_SX342_QL70_FMwebp_.jpg",
+      url: "https://www.amazon.com/s?k=AI-Ready+Workforce+Rohan+Jowallah",
+      tone: "teal",
+      description: "An essential handbook for workers, leaders, and learners preparing for AI-augmented work."
+    }
+  ],
+  PDFS: []
+};
+
+/* =========================================================================
+   STATE
+========================================================================= */
+const DRAFT_KEY = "iml.admin.draft.v1";
+let state = loadDraft();
+
+function loadDraft() {
+  try {
+    const raw = localStorage.getItem(DRAFT_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch {}
+  return JSON.parse(JSON.stringify(DEFAULTS));
+}
+function saveDraft() {
+  // Pull current form values back into state.
+  pullSiteForm();
+  pullVideoForm();
+  localStorage.setItem(DRAFT_KEY, JSON.stringify(state));
+  flashSaved();
+}
+function flashSaved() {
+  const el = document.createElement("div");
+  el.textContent = "✓ Saved";
+  el.style.cssText = "position:fixed; bottom:20px; right:20px; background:#1F6B41; color:white; padding:10px 16px; border-radius:999px; font-weight:800; box-shadow:0 6px 20px rgba(0,0,0,0.25); z-index:200;";
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 1400);
+}
+
+/* =========================================================================
+   AUTH
+========================================================================= */
+async function sha256(str) {
+  const buf = new TextEncoder().encode(str);
+  const hashBuf = await crypto.subtle.digest("SHA-256", buf);
+  return Array.from(new Uint8Array(hashBuf)).map(b => b.toString(16).padStart(2,"0")).join("");
+}
+async function tryLogin(pw) {
+  const h = await sha256(pw);
+  return h === PASSWORD_HASH;
+}
+function logout() {
+  sessionStorage.removeItem("iml.admin.session");
+  location.reload();
+}
+function ensureAuth() {
+  if (sessionStorage.getItem("iml.admin.session") === "ok") {
+    showApp();
+  }
+}
+function showApp() {
+  document.getElementById("lock-screen").style.display = "none";
+  document.getElementById("app").classList.add("visible");
+  bootApp();
+}
+
+/* =========================================================================
+   APP BOOT
+========================================================================= */
+function bootApp() {
+  // Tab nav
+  document.querySelectorAll("nav.tabs button").forEach(btn => {
+    btn.addEventListener("click", () => switchTab(btn.dataset.tab));
+  });
+  renderAll();
+  document.getElementById("who-bar").textContent = "Manage content for " + (state.SITE.name || "your site");
+}
+function switchTab(tab) {
+  document.querySelectorAll("nav.tabs button").forEach(b => b.classList.toggle("active", b.dataset.tab === tab));
+  document.querySelectorAll(".panel").forEach(p => p.classList.toggle("active", p.dataset.panel === tab));
+  if (tab === "signups") renderSignups();
+  if (tab === "dash")    renderStats();
+  if (tab === "generate") generateConfig();
+}
+
+/* =========================================================================
+   RENDER FORMS
+========================================================================= */
+function renderAll() {
+  if (!state.FRAMEWORKS) state.FRAMEWORKS = [];
+  if (!state.BOOKS)      state.BOOKS = [];
+  pushSiteForm();
+  pushVideoForm();
+  renderApps();
+  renderFrameworks();
+  renderBooks();
+  renderPdfs();
+  renderStats();
+}
+function pushSiteForm() {
+  const s = state.SITE;
+  setVal("f-site-name", s.name);
+  setVal("f-site-tagline", s.tagline);
+  setVal("f-site-heroscript", s.heroScript);
+  setVal("f-site-herotitle", s.heroTitle);
+  setVal("f-site-herolead", s.heroLead);
+  setVal("f-site-abouttext", s.aboutText);
+  setVal("f-site-sheets", s.sheetsEndpoint || "");
+}
+function pullSiteForm() {
+  state.SITE.name           = getVal("f-site-name");
+  state.SITE.tagline        = getVal("f-site-tagline");
+  state.SITE.heroScript     = getVal("f-site-heroscript");
+  state.SITE.heroTitle      = getVal("f-site-herotitle");
+  state.SITE.heroLead       = getVal("f-site-herolead");
+  state.SITE.aboutText      = getVal("f-site-abouttext");
+  state.SITE.sheetsEndpoint = getVal("f-site-sheets").trim();
+}
+function pushVideoForm() {
+  const v = state.VIDEO_OF_WEEK || { enabled: false };
+  setVal("f-video-enabled", String(!!v.enabled));
+  setVal("f-video-type", v.type || "youtube");
+  setVal("f-video-title", v.title || "");
+  setVal("f-video-desc",  v.description || "");
+  setVal("f-video-id",    v.id || "");
+  setVal("f-video-poster", v.poster || "");
+}
+function pullVideoForm() {
+  state.VIDEO_OF_WEEK = {
+    enabled:     getVal("f-video-enabled") === "true",
+    type:        getVal("f-video-type"),
+    title:       getVal("f-video-title"),
+    description: getVal("f-video-desc"),
+    id:          getVal("f-video-id").trim(),
+    poster:      getVal("f-video-poster").trim()
+  };
+}
+
+/* =========================================================================
+   APPS LIST
+========================================================================= */
+function renderApps() {
+  const list = document.getElementById("apps-list");
+  list.innerHTML = "";
+  state.APPS.forEach((app, i) => list.appendChild(appCard(app, i)));
+  document.getElementById("apps-count").textContent = state.APPS.length;
+}
+function appCard(app, idx) {
+  const node = document.createElement("div");
+  node.className = "list-item";
+  node.draggable = true;
+  node.dataset.idx = idx;
+  node.innerHTML = `
+    <div class="list-item-head">
+      <span class="handle" title="Drag to reorder">☰</span>
+      <span class="num">${idx+1}</span>
+      <span class="title">${escapeHtml(app.name || "(untitled)")}</span>
+      <div class="actions">
+        <button class="icon-btn" title="Move up" onclick="moveApp(${idx}, -1)">↑</button>
+        <button class="icon-btn" title="Move down" onclick="moveApp(${idx}, 1)">↓</button>
+        <button class="icon-btn danger" title="Delete" onclick="removeApp(${idx})">✕</button>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label>Name</label>
+        <input type="text" data-k="name" />
+      </div>
+      <div>
+        <label>Ribbon (optional)</label>
+        <input type="text" data-k="ribbon" placeholder="e.g. New, Flagship, Jamaica" />
+      </div>
+    </div>
+    <label>Description</label>
+    <textarea data-k="description"></textarea>
+    <div class="row">
+      <div>
+        <label>Image URL</label>
+        <input type="url" data-k="image" />
+      </div>
+      <div>
+        <label>App URL (the hidden link)</label>
+        <input type="url" data-k="url" />
+      </div>
+    </div>
+  `;
+  node.querySelectorAll("input[data-k], textarea[data-k]").forEach(inp => {
+    const k = inp.dataset.k;
+    inp.value = app[k] || "";
+    inp.addEventListener("input", () => {
+      state.APPS[idx][k] = inp.value;
+      // Update title live
+      if (k === "name") node.querySelector(".title").textContent = inp.value || "(untitled)";
+    });
+  });
+  attachDnD(node, "APPS");
+  return node;
+}
+function addApp() {
+  state.APPS.push({ name: "New app", description: "", image: "", url: "", ribbon: "" });
+  saveDraft();
+  renderApps();
+}
+function removeApp(i) {
+  confirmModal("Remove this app?", "This won't affect the live site until you generate and publish.", () => {
+    state.APPS.splice(i, 1);
+    saveDraft();
+    renderApps();
+  });
+}
+function moveApp(i, delta) {
+  const j = i + delta;
+  if (j < 0 || j >= state.APPS.length) return;
+  const tmp = state.APPS[i]; state.APPS[i] = state.APPS[j]; state.APPS[j] = tmp;
+  saveDraft();
+  renderApps();
+}
+
+/* =========================================================================
+   FRAMEWORKS LIST
+========================================================================= */
+function renderFrameworks() {
+  const list = document.getElementById("frameworks-list");
+  if (!list) return;
+  list.innerHTML = "";
+  (state.FRAMEWORKS || []).forEach((fw, i) => list.appendChild(frameworkCard(fw, i)));
+  document.getElementById("frameworks-count").textContent = (state.FRAMEWORKS || []).length;
+}
+function frameworkCard(fw, idx) {
+  const node = document.createElement("div");
+  node.className = "list-item";
+  node.draggable = true;
+  node.dataset.idx = idx;
+  node.innerHTML = `
+    <div class="list-item-head">
+      <span class="handle" title="Drag to reorder">☰</span>
+      <span class="num">${idx+1}</span>
+      <span class="title">${escapeHtml(fw.name || "(untitled)")}</span>
+      <div class="actions">
+        <button class="icon-btn" title="Move up" onclick="moveFramework(${idx}, -1)">↑</button>
+        <button class="icon-btn" title="Move down" onclick="moveFramework(${idx}, 1)">↓</button>
+        <button class="icon-btn danger" title="Delete" onclick="removeFramework(${idx})">✕</button>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label>Name</label>
+        <input type="text" data-k="name" />
+      </div>
+      <div>
+        <label>Kind</label>
+        <select data-k="kind">
+          <option value="doc">Google Doc</option>
+          <option value="sheet">Spreadsheet (Sheets / Excel)</option>
+          <option value="external">Other (link)</option>
+        </select>
+      </div>
+    </div>
+    <label>Description</label>
+    <textarea data-k="description"></textarea>
+    <div class="row">
+      <div>
+        <label>Cover image URL</label>
+        <input type="url" data-k="image" placeholder="https://drive.google.com/thumbnail?id=DOC_ID&sz=w800" />
+      </div>
+      <div>
+        <label>Resource URL</label>
+        <input type="url" data-k="url" />
+      </div>
+    </div>
+    <label>Ribbon (optional)</label>
+    <input type="text" data-k="ribbon" placeholder="e.g. Framework, Diagnostic, Workshop" />
+  `;
+  node.querySelectorAll("input[data-k], textarea[data-k], select[data-k]").forEach(inp => {
+    const k = inp.dataset.k;
+    inp.value = fw[k] || "";
+    inp.addEventListener("input", () => {
+      state.FRAMEWORKS[idx][k] = inp.value;
+      if (k === "name") node.querySelector(".title").textContent = inp.value || "(untitled)";
+    });
+    inp.addEventListener("change", () => {
+      state.FRAMEWORKS[idx][k] = inp.value;
+    });
+  });
+  attachDnD(node, "FRAMEWORKS");
+  return node;
+}
+function addFramework() {
+  if (!state.FRAMEWORKS) state.FRAMEWORKS = [];
+  state.FRAMEWORKS.push({ name: "New framework", description: "", image: "", url: "", kind: "doc", ribbon: "" });
+  saveDraft();
+  renderFrameworks();
+}
+function removeFramework(i) {
+  confirmModal("Remove this framework?", "This won't affect the live site until you generate and publish.", () => {
+    state.FRAMEWORKS.splice(i, 1);
+    saveDraft();
+    renderFrameworks();
+  });
+}
+function moveFramework(i, delta) {
+  const j = i + delta;
+  const arr = state.FRAMEWORKS || [];
+  if (j < 0 || j >= arr.length) return;
+  const tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+  saveDraft();
+  renderFrameworks();
+}
+
+/* =========================================================================
+   BOOKS LIST
+========================================================================= */
+function renderBooks() {
+  const list = document.getElementById("books-list");
+  if (!list) return;
+  list.innerHTML = "";
+  (state.BOOKS || []).forEach((b, i) => list.appendChild(bookCard(b, i)));
+  document.getElementById("books-count").textContent = (state.BOOKS || []).length;
+}
+function bookCard(book, idx) {
+  const node = document.createElement("div");
+  node.className = "list-item";
+  node.draggable = true;
+  node.dataset.idx = idx;
+  node.innerHTML = `
+    <div class="list-item-head">
+      <span class="handle" title="Drag to reorder">☰</span>
+      <span class="num">${idx+1}</span>
+      <span class="title">${escapeHtml(book.title || "(untitled)")}</span>
+      <div class="actions">
+        <button class="icon-btn" title="Move up"   onclick="moveBook(${idx}, -1)">↑</button>
+        <button class="icon-btn" title="Move down" onclick="moveBook(${idx}, 1)">↓</button>
+        <button class="icon-btn danger" title="Delete" onclick="removeBook(${idx})">✕</button>
+      </div>
+    </div>
+    <div class="row">
+      <div><label>Title</label><input type="text" data-k="title" /></div>
+      <div><label>Subtitle</label><input type="text" data-k="subtitle" /></div>
+    </div>
+    <div class="row">
+      <div><label>Author</label><input type="text" data-k="author" /></div>
+      <div>
+        <label>Cover tone (used for fallback cover)</label>
+        <select data-k="tone">
+          <option value="navy">Navy (deep blue)</option>
+          <option value="coral">Coral (sunset accent)</option>
+          <option value="teal">Teal (sea green)</option>
+        </select>
+      </div>
+    </div>
+    <label>Description (1–2 sentences)</label>
+    <textarea data-k="description"></textarea>
+    <div class="row">
+      <div><label>Cover image URL (optional — leave blank for fallback)</label><input type="url" data-k="image" /></div>
+      <div><label>Purchase / info URL</label><input type="url" data-k="url" /></div>
+    </div>
+  `;
+  node.querySelectorAll("input[data-k], textarea[data-k], select[data-k]").forEach(inp => {
+    const k = inp.dataset.k;
+    inp.value = book[k] || "";
+    inp.addEventListener("input", () => {
+      state.BOOKS[idx][k] = inp.value;
+      if (k === "title") node.querySelector(".title").textContent = inp.value || "(untitled)";
+    });
+    inp.addEventListener("change", () => { state.BOOKS[idx][k] = inp.value; });
+  });
+  attachDnD(node, "BOOKS");
+  return node;
+}
+function addBook() {
+  if (!state.BOOKS) state.BOOKS = [];
+  state.BOOKS.push({ title: "New book", subtitle: "", author: "Dr. Rohan Jowallah", year: "", image: "", url: "", tone: "navy", description: "" });
+  saveDraft();
+  renderBooks();
+}
+function removeBook(i) {
+  confirmModal("Remove this book?", "This won't affect the live site until you generate and publish.", () => {
+    state.BOOKS.splice(i, 1);
+    saveDraft();
+    renderBooks();
+  });
+}
+function moveBook(i, delta) {
+  const j = i + delta;
+  const arr = state.BOOKS || [];
+  if (j < 0 || j >= arr.length) return;
+  const tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+  saveDraft();
+  renderBooks();
+}
+
+/* =========================================================================
+   PDFS LIST
+========================================================================= */
+function renderPdfs() {
+  const list = document.getElementById("pdfs-list");
+  list.innerHTML = "";
+  state.PDFS.forEach((p, i) => list.appendChild(pdfCard(p, i)));
+  document.getElementById("pdfs-count").textContent = state.PDFS.length;
+}
+function pdfCard(pdf, idx) {
+  const node = document.createElement("div");
+  node.className = "list-item";
+  node.draggable = true;
+  node.dataset.idx = idx;
+  node.innerHTML = `
+    <div class="list-item-head">
+      <span class="handle" title="Drag to reorder">☰</span>
+      <span class="num">${idx+1}</span>
+      <span class="title">${escapeHtml(pdf.name || "(untitled)")}</span>
+      <div class="actions">
+        <button class="icon-btn" title="Move up" onclick="movePdf(${idx}, -1)">↑</button>
+        <button class="icon-btn" title="Move down" onclick="movePdf(${idx}, 1)">↓</button>
+        <button class="icon-btn danger" title="Delete" onclick="removePdf(${idx})">✕</button>
+      </div>
+    </div>
+    <label>Name</label>
+    <input type="text" data-k="name" />
+    <label>Description</label>
+    <textarea data-k="description"></textarea>
+    <label>PDF URL (must be .pdf and CORS-friendly host)</label>
+    <input type="url" data-k="url" />
+  `;
+  node.querySelectorAll("input[data-k], textarea[data-k]").forEach(inp => {
+    const k = inp.dataset.k;
+    inp.value = pdf[k] || "";
+    inp.addEventListener("input", () => {
+      state.PDFS[idx][k] = inp.value;
+      if (k === "name") node.querySelector(".title").textContent = inp.value || "(untitled)";
+    });
+  });
+  attachDnD(node, "PDFS");
+  return node;
+}
+function addPdf() {
+  state.PDFS.push({ name: "New document", description: "", url: "" });
+  saveDraft();
+  renderPdfs();
+}
+function removePdf(i) {
+  confirmModal("Remove this PDF?", "This won't affect the live site until you generate and publish.", () => {
+    state.PDFS.splice(i, 1);
+    saveDraft();
+    renderPdfs();
+  });
+}
+function movePdf(i, delta) {
+  const j = i + delta;
+  if (j < 0 || j >= state.PDFS.length) return;
+  const tmp = state.PDFS[i]; state.PDFS[i] = state.PDFS[j]; state.PDFS[j] = tmp;
+  saveDraft();
+  renderPdfs();
+}
+
+/* =========================================================================
+   DRAG & DROP
+========================================================================= */
+let dragSrcIdx = null;
+let dragKey = null;
+function attachDnD(node, key) {
+  node.addEventListener("dragstart", (e) => {
+    dragSrcIdx = Number(node.dataset.idx);
+    dragKey = key;
+    node.classList.add("dragging");
+    e.dataTransfer.effectAllowed = "move";
+  });
+  node.addEventListener("dragend", () => node.classList.remove("dragging"));
+  node.addEventListener("dragover", (e) => { e.preventDefault(); e.dataTransfer.dropEffect = "move"; });
+  node.addEventListener("drop", (e) => {
+    e.preventDefault();
+    if (dragKey !== key) return;
+    const targetIdx = Number(node.dataset.idx);
+    if (dragSrcIdx === null || dragSrcIdx === targetIdx) return;
+    const arr = state[key];
+    const item = arr.splice(dragSrcIdx, 1)[0];
+    arr.splice(targetIdx, 0, item);
+    saveDraft();
+    if (key === "APPS") renderApps(); else renderPdfs();
+  });
+}
+
+/* =========================================================================
+   STATS / DASHBOARD
+========================================================================= */
+function renderStats() {
+  document.getElementById("stat-apps").textContent = state.APPS.length;
+  const fwEl = document.getElementById("stat-frameworks");
+  if (fwEl) fwEl.textContent = (state.FRAMEWORKS || []).length;
+  const bkEl = document.getElementById("stat-books");
+  if (bkEl) bkEl.textContent = (state.BOOKS || []).length;
+  document.getElementById("stat-pdfs").textContent = state.PDFS.length;
+  document.getElementById("stat-video").textContent =
+    (state.VIDEO_OF_WEEK && state.VIDEO_OF_WEEK.enabled && state.VIDEO_OF_WEEK.id) ? "ON" : "OFF";
+  document.getElementById("stat-signups").textContent = getLocalSignups().length;
+}
+
+/* =========================================================================
+   SIGN-UPS
+========================================================================= */
+function getLocalSignups() {
+  try { return JSON.parse(localStorage.getItem("iml.signup.log") || "[]"); }
+  catch { return []; }
+}
+function renderSignups() {
+  const rows = getLocalSignups().slice().reverse();
+  const wrap = document.getElementById("signups-table-wrap");
+  if (!rows.length) {
+    wrap.innerHTML = `<p class="help">No local previews yet. When someone enters their email on this device, it shows up here. Use your Google Sheet for the master list.</p>`;
+    return;
+  }
+  let html = `<table class="signups"><thead><tr><th>When</th><th>Name</th><th>Email</th><th>Consent</th></tr></thead><tbody>`;
+  rows.forEach(r => {
+    html += `<tr><td>${escapeHtml(new Date(r.timestamp).toLocaleString())}</td><td>${escapeHtml(r.name||"")}</td><td>${escapeHtml(r.email||"")}</td><td>${r.consent ? "Yes" : "Session only"}</td></tr>`;
+  });
+  html += "</tbody></table>";
+  wrap.innerHTML = html;
+}
+function exportSignupsCSV() {
+  const rows = getLocalSignups();
+  if (!rows.length) { alert("No local previews to export."); return; }
+  const head = "timestamp,name,email,consent,page\n";
+  const body = rows.map(r => [r.timestamp, r.name, r.email, r.consent, r.page].map(v => `"${String(v||"").replace(/"/g,'""')}"`).join(",")).join("\n");
+  downloadFile("signups-local.csv", head + body, "text/csv");
+}
+function clearLocalSignups() {
+  confirmModal("Clear local signup previews?", "This only clears the preview table on this device. Your Google Sheet is unaffected.", () => {
+    localStorage.removeItem("iml.signup.log");
+    renderSignups(); renderStats();
+  });
+}
+function openSheet() {
+  const url = (state.SITE.sheetsEndpoint || "").trim();
+  if (!url) { alert("No Google Sheets endpoint set. Add it under Site → Sheets endpoint URL."); return; }
+  // Apps Script exec URL doesn't link to the sheet directly. Open Sheets home with a tip.
+  alert("Open Google Sheets in a new tab and find your signups sheet (the one your Apps Script writes to). The endpoint URL above is the Apps Script web app, not the Sheet itself.");
+  window.open("https://sheets.google.com", "_blank", "noopener");
+}
+
+/* =========================================================================
+   GENERATE CONFIG
+========================================================================= */
+function generateConfig() {
+  pullSiteForm(); pullVideoForm();
+  saveDraft();
+  const code = buildConfigBlock();
+  document.getElementById("config-output").textContent = code;
+}
+function buildConfigBlock() {
+  const indent = (s, n=2) => s.split("\n").map(l => " ".repeat(n) + l).join("\n");
+  const lines = [];
+  lines.push(`<!-- CONFIG-START -->`);
+  lines.push(`<script id="site-config">`);
+  lines.push(`  // ----- Basic branding -----`);
+  lines.push(`  const SITE = ` + jsObj(state.SITE) + `;`);
+  lines.push(``);
+  lines.push(`  // ----- Video of the Week -----`);
+  lines.push(`  // Set enabled: false (or VIDEO_OF_WEEK = null) to hide the whole section.`);
+  lines.push(`  const VIDEO_OF_WEEK = ` + jsObj(state.VIDEO_OF_WEEK) + `;`);
+  lines.push(``);
+  lines.push(`  // ----- Apps -----`);
+  lines.push(`  const APPS = ` + jsArr(state.APPS) + `;`);
+  lines.push(``);
+  lines.push(`  // ----- Frameworks & Tools -----`);
+  lines.push(`  const FRAMEWORKS = ` + jsArr(state.FRAMEWORKS || []) + `;`);
+  lines.push(``);
+  lines.push(`  // ----- Books -----`);
+  lines.push(`  const BOOKS = ` + jsArr(state.BOOKS || []) + `;`);
+  lines.push(``);
+  lines.push(`  // ----- PDFs -----`);
+  lines.push(`  const PDFS = ` + jsArr(state.PDFS) + `;`);
+  lines.push(`<\/script>`);
+  lines.push(`<!-- CONFIG-END -->`);
+  return lines.join("\n");
+}
+function jsObj(obj) {
+  const keys = Object.keys(obj);
+  const inner = keys.map(k => `    ${k}: ${jsVal(obj[k])}`).join(",\n");
+  return "{\n" + inner + "\n  }";
+}
+function jsArr(arr) {
+  if (!arr.length) return "[]";
+  const items = arr.map(o => {
+    const inner = Object.keys(o).map(k => `      ${k}: ${jsVal(o[k])}`).join(",\n");
+    return "    {\n" + inner + "\n    }";
+  }).join(",\n");
+  return "[\n" + items + "\n  ]";
+}
+function jsVal(v) {
+  if (v === null || v === undefined) return '""';
+  if (typeof v === "boolean") return String(v);
+  if (typeof v === "number") return String(v);
+  return JSON.stringify(String(v));
+}
+function copyConfig() {
+  const text = document.getElementById("config-output").textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const f = document.getElementById("copy-flag");
+    f.style.display = "inline";
+    setTimeout(() => f.style.display = "none", 1800);
+  });
+}
+
+/* =========================================================================
+   PASSWORD CHANGE
+========================================================================= */
+async function generateNewHash() {
+  const p1 = document.getElementById("pw-new").value;
+  const p2 = document.getElementById("pw-confirm").value;
+  const err = document.getElementById("pw-err");
+  err.textContent = "";
+  if (p1.length < 8) { err.textContent = "Use at least 8 characters."; return; }
+  if (p1 !== p2)     { err.textContent = "Passwords don't match."; return; }
+  const h = await sha256(p1);
+  document.getElementById("pw-output").style.display = "block";
+  document.getElementById("pw-hash-line").textContent =
+    `const PASSWORD_HASH = "${h}";`;
+}
+
+/* =========================================================================
+   DRAFT IMPORT / EXPORT
+========================================================================= */
+function exportDraftJson() {
+  pullSiteForm(); pullVideoForm();
+  downloadFile("admin-draft.json", JSON.stringify(state, null, 2), "application/json");
+}
+function importDraftJson(ev) {
+  const file = ev.target.files && ev.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const obj = JSON.parse(reader.result);
+      if (!obj.SITE || !obj.APPS) throw new Error("Invalid draft file.");
+      state = obj;
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(state));
+      renderAll();
+      flashSaved();
+    } catch (e) { alert("Couldn't import: " + e.message); }
+  };
+  reader.readAsText(file);
+}
+function resetDraft() {
+  confirmModal("Reset everything to defaults?", "Your current drafts in this browser will be replaced.", () => {
+    state = JSON.parse(JSON.stringify(DEFAULTS));
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(state));
+    renderAll();
+  });
+}
+
+/* =========================================================================
+   MODAL CONFIRM
+========================================================================= */
+let _modalCb = null;
+function confirmModal(title, body, cb) {
+  document.getElementById("modal-title").textContent = title;
+  document.getElementById("modal-body").textContent = body;
+  document.getElementById("modal").classList.add("open");
+  _modalCb = cb;
+}
+function closeModal(ok) {
+  document.getElementById("modal").classList.remove("open");
+  if (ok && typeof _modalCb === "function") _modalCb();
+  _modalCb = null;
+}
+
+/* =========================================================================
+   UTILS
+========================================================================= */
+function $(id) { return document.getElementById(id); }
+function getVal(id) { const el = $(id); return el ? el.value : ""; }
+function setVal(id, v) { const el = $(id); if (el) el.value = (v == null ? "" : v); }
+function escapeHtml(str) {
+  return String(str||"").replace(/[&<>"']/g, m => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]));
+}
+function downloadFile(name, content, mime) {
+  const blob = new Blob([content], { type: mime });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+/* =========================================================================
+   BOOT
+========================================================================= */
+document.getElementById("login-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const pw = document.getElementById("login-password").value;
+  const ok = await tryLogin(pw);
+  if (!ok) { document.getElementById("login-err").textContent = "Wrong password."; return; }
+  sessionStorage.setItem("iml.admin.session", "ok");
+  showApp();
+});
+ensureAuth();
+</script>
+
+</body>
+</html>

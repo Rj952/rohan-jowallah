@@ -1,0 +1,2082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Island Mind Lab — Apps, Docs & Stories from the Caribbean</title>
+<meta name="description" content="A curated collection of apps, documents, and videos from the Caribbean." />
+
+<!--
+=========================================================================
+  ISLAND MIND LAB — Caribbean-themed landing page
+  -------------------------------------------------------------------
+  HOW TO EDIT YOUR CONTENT:
+    1. Scroll to the SITE CONFIG block (id="site-config") near the bottom.
+    2. Edit SITE, APPS, PDFS, VIDEO_OF_WEEK objects.
+    3. Save the file and re-upload to your host (Netlify, Vercel,
+       GitHub Pages, etc.).
+  See the companion file "ADMIN-INSTRUCTIONS.md" for full details.
+=========================================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    /* Caribbean Dusk palette — WCAG AA on white unless marked */
+    --turquoise:       #00696F;  /* 5.5:1 on white ✓ AA */
+    --turquoise-deep:  #004D52;  /* 8.7:1 on white ✓ AAA */
+    --sea:             #003D5B;  /* 12:1 on white ✓ AAA */
+    --coral:           #C44536;  /* 5.4:1 on white ✓ AA */
+    --coral-bright:    #D6663F;  /* large text / fill only — 3.9:1 */
+    --sunset:          #B5651D;  /* 5.5:1 on white ✓ AA */
+    --gold:            #9C6516;  /* light-bg amber — 5.6:1 on white ✓ AA */
+    --gold-on-dark:    #F4C430;  /* for accents on dark navy/teal — 8.6:1 on #003D5B ✓ */
+    --palm:            #1F6B41;  /* 5.9:1 on white ✓ AA */
+    --sand:            #FFF8EC;  /* warm cream bg */
+    --sand-warm:       #F5E8D0;  /* second cream */
+    --navy:            #0A1F2E;  /* near-black navy */
+    --ink:             #0A1F2E;  /* primary text — 17:1 on cream ✓ AAA */
+    --ink-soft:        #3D4F5C;  /* secondary text — 8.7:1 on cream ✓ AAA */
+    --focus-ring:      #F4C430;  /* high-vis focus outline */
+    --white:           #FFFFFF;
+    --shadow-soft: 0 10px 30px rgba(10, 31, 46, 0.12);
+    --shadow-card: 0 14px 40px rgba(10, 31, 46, 0.18);
+    --radius: 18px;
+  }
+
+  /* Visible focus for keyboard navigation (accessibility) */
+  *:focus { outline: none; }
+  *:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  /* Honour reduced-motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Skip link for screen-reader / keyboard users */
+  .skip-link {
+    position: absolute; top: -100px; left: 12px; z-index: 9999;
+    background: var(--ink); color: var(--white);
+    padding: 10px 16px; border-radius: 8px;
+    font-weight: 800; text-decoration: none;
+  }
+  .skip-link:focus { top: 12px; }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    background: var(--sand);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 { font-family: 'Fraunces', 'Georgia', serif; line-height: 1.15; margin: 0 0 0.4em; color: var(--navy); }
+  h1 { font-size: clamp(2.2rem, 5.6vw, 4rem); font-weight: 900; }
+  h2 { font-size: clamp(1.75rem, 3.6vw, 2.6rem); font-weight: 700; }
+  h3 { font-size: 1.3rem; font-weight: 700; }
+  p { margin: 0 0 1em; }
+  a { color: var(--sea); }
+
+  .accent-script { font-family: 'Fraunces', serif; font-style: italic; color: var(--coral); font-weight: 500; }
+
+  /* ========== TOP NAV ========== */
+  .top-nav {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    z-index: 5;
+    display: flex; align-items: center;
+    gap: 18px;
+    padding: 18px 32px;
+    color: rgba(255,255,255,0.95);
+    flex-wrap: wrap;
+  }
+  .top-nav .logo {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--white);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    margin-right: auto;
+  }
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 4px;
+    margin: 0; padding: 0;
+    flex-wrap: wrap;
+  }
+  .nav-links a {
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.92rem;
+    letter-spacing: 0.02em;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .nav-links a:hover {
+    color: var(--white);
+    background: rgba(255,255,255,0.08);
+  }
+  .nav-linkedin {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: rgba(255,255,255,0.95);
+    text-decoration: none;
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 7px 14px;
+    border-radius: 999px;
+    font-weight: 800; font-size: 0.85rem;
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+  .nav-linkedin:hover { background: rgba(255,255,255,0.18); transform: translateY(-1px); }
+  @media (max-width: 720px) {
+    .top-nav { padding: 14px 18px; gap: 10px; }
+    .nav-links a { padding: 6px 8px; font-size: 0.85rem; }
+    .nav-linkedin span { display: none; }
+  }
+
+  /* ========== HERO ========== */
+  .hero {
+    position: relative;
+    min-height: 82vh;
+    padding: 110px 24px 80px;
+    color: var(--white);
+    overflow: hidden;
+    /* Calm ocean gradient — deep navy at top, teal sea below */
+    background:
+      radial-gradient(ellipse at 80% 12%, rgba(244, 196, 48, 0.16) 0%, transparent 55%),
+      linear-gradient(180deg, #002B41 0%, #003D5B 35%, #00595E 75%, #00696F 100%);
+  }
+  .hero::before {
+    /* Subtle geometric grid overlay for a more corporate texture */
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 64px 64px;
+    pointer-events: none;
+    mask-image: linear-gradient(180deg, rgba(0,0,0,0.6), transparent 70%);
+    -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,0.6), transparent 70%);
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -1px; height: 60px;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60' preserveAspectRatio='none'><path fill='%23FFF8EC' d='M0,30 C360,60 720,0 1080,30 C1260,45 1380,40 1440,40 L1440,60 L0,60 Z'/></svg>") center/cover no-repeat;
+  }
+
+  /* AI badge — inline above hero tagline */
+  .ai-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px 6px 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(244, 196, 48, 0.55);
+    color: var(--white);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+    margin-bottom: 14px;
+  }
+  .ai-badge .ai-icon {
+    width: 18px; height: 18px;
+    color: var(--gold-on-dark);
+    filter: drop-shadow(0 0 4px rgba(244, 196, 48, 0.55));
+    animation: aiPulse 3.6s ease-in-out infinite;
+  }
+  @keyframes aiPulse {
+    0%, 100% { transform: scale(1) rotate(0); opacity: 0.95; }
+    50%      { transform: scale(1.10) rotate(6deg); opacity: 1; }
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 980px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .hero .tagline {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 24px;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+  .hero h1 {
+    color: var(--white);
+    margin-bottom: 16px;
+    text-shadow: 0 4px 22px rgba(15, 42, 60, 0.25);
+  }
+  .hero h1 .accent-script { color: var(--gold-on-dark); display: block; font-weight: 700; font-size: 0.78em; margin-bottom: -0.1em; text-shadow: 0 2px 8px rgba(0,0,0,0.25); }
+  .hero p.lead {
+    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+    max-width: 640px;
+    margin: 0 auto 32px;
+    color: rgba(255,255,255,0.95);
+  }
+  .hero-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 26px;
+    border-radius: 999px;
+    border: none;
+    font-family: inherit;
+    font-weight: 800;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+    text-decoration: none;
+  }
+  .btn-primary { background: var(--coral); color: var(--white); box-shadow: 0 8px 22px rgba(255,107,107,0.4); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(255,107,107,0.55); }
+  .btn-ghost { background: rgba(255,255,255,0.18); color: var(--white); border: 1.5px solid rgba(255,255,255,0.55); }
+  .btn-ghost:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px); }
+  .btn-secondary { background: var(--navy); color: var(--white); }
+  .btn-secondary:hover { background: var(--sea); transform: translateY(-2px); }
+
+  /* ========== SECTIONS ========== */
+  section.block { padding: 80px 24px; }
+  .container { max-width: 1180px; margin: 0 auto; }
+  .section-head { text-align: center; margin-bottom: 48px; }
+  .section-head .eyebrow {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--turquoise-deep);
+    display: inline-block;
+    margin-bottom: 14px;
+    padding: 4px 12px;
+    background: rgba(0, 105, 111, 0.08);
+    border-radius: 999px;
+  }
+  .section-head h2 { margin-bottom: 12px; }
+  .section-head p { color: #3D4F5C; max-width: 620px; margin: 0 auto; }
+  .app-card p, .pdf-card p { color: #3D4F5C; }
+  .video-meta p { color: #3D4F5C; }
+
+  /* ========== VIDEO OF THE WEEK ========== */
+  .video-section {
+    background: var(--white);
+    position: relative;
+    overflow: hidden;
+  }
+  .video-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .video-frame {
+    background: #000;
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    cursor: pointer;
+  }
+  .video-frame .video-poster {
+    position: absolute; inset: 0;
+    background-size: cover;
+    background-position: center;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .video-frame .play-btn {
+    width: 84px; height: 84px;
+    background: rgba(255,107,107,0.95);
+    border-radius: 50%;
+    display: grid; place-items: center;
+    color: white; font-size: 28px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+  .video-frame:hover .play-btn { transform: scale(1.1); background: var(--coral); }
+  .video-frame iframe, .video-frame video {
+    width: 100%; height: 100%; border: 0; display: block;
+  }
+  .video-meta { padding: 38px 36px; display: flex; flex-direction: column; justify-content: center; }
+  .video-meta .badge {
+    display: inline-block; padding: 6px 14px; border-radius: 999px;
+    background: var(--turquoise); color: white; font-weight: 800;
+    font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
+    align-self: flex-start; margin-bottom: 14px;
+  }
+  .video-meta h3 { font-family: 'Fraunces', serif; font-size: 1.7rem; color: var(--navy); margin-bottom: 10px; }
+  .video-meta p { color: #4b6172; margin-bottom: 0; }
+
+  /* ========== APPS GRID ========== */
+  .apps-section { background: var(--sand); }
+  .grid {
+    display: grid;
+    gap: 28px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+  .app-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid transparent;
+  }
+  .app-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-card);
+    border-color: rgba(0,191,166,0.35);
+  }
+  .app-card .thumb {
+    aspect-ratio: 16 / 10;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    background-color: #e6f4f1;
+  }
+  .app-card .thumb::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 55%, rgba(15,42,60,0.55) 100%);
+  }
+  .app-card .ribbon {
+    position: absolute; top: 12px; right: 12px;
+    background: var(--coral); color: white;
+    font-size: 0.72rem; font-weight: 800;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 5px 10px; border-radius: 999px;
+    box-shadow: 0 4px 10px rgba(255,107,107,0.4);
+    z-index: 1;
+  }
+  .app-card .body { padding: 18px 20px 22px; flex: 1; display: flex; flex-direction: column; }
+  .app-card h3 { margin: 0 0 6px; font-family: 'Fraunces', serif; font-size: 1.2rem; }
+  .app-card p { color: #5a6d7a; font-size: 0.95rem; margin: 0 0 14px; flex: 1; }
+  .app-card .open-link {
+    align-self: flex-start;
+    color: var(--turquoise-deep);
+    font-weight: 800;
+    font-size: 0.95rem;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .app-card:hover .open-link { color: var(--coral); }
+
+  /* ========== FRAMEWORKS & TOOLS ========== */
+  .frameworks-section {
+    background: var(--white);
+    border-top: 1px solid #E6ECF0;
+  }
+  .framework-card {
+    background: var(--white);
+    border: 1px solid #E6ECF0;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    position: relative;
+  }
+  .framework-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-card);
+    border-color: rgba(0, 105, 111, 0.4);
+  }
+  .framework-card .fw-thumb {
+    aspect-ratio: 16 / 10;
+    position: relative;
+    background-size: cover;
+    background-position: top center;
+    background-color: #F5F8FA;
+    border-bottom: 1px solid #E6ECF0;
+  }
+  .framework-card .fw-thumb::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(10, 31, 46, 0.06) 100%);
+    pointer-events: none;
+  }
+  .framework-card .fw-thumb .fw-icon {
+    position: absolute;
+    bottom: 12px; left: 12px;
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    background: var(--white);
+    color: var(--turquoise-deep);
+    box-shadow: 0 4px 14px rgba(10, 31, 46, 0.15);
+    display: grid; place-items: center;
+    font-weight: 800; font-size: 0.95rem;
+    letter-spacing: 0.04em;
+  }
+  .framework-card .fw-thumb .fw-icon.doc   { color: #2A6EE6; }
+  .framework-card .fw-thumb .fw-icon.sheet { color: #0F8B47; }
+  .framework-card .ribbon {
+    position: absolute; top: 12px; right: 12px;
+    background: var(--turquoise);
+    color: var(--white);
+    font-size: 0.72rem; font-weight: 800;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 5px 10px; border-radius: 999px;
+    box-shadow: 0 4px 10px rgba(0, 105, 111, 0.35);
+  }
+  .framework-card .body { padding: 18px 20px 22px; flex: 1; display: flex; flex-direction: column; }
+  .framework-card h3 { margin: 0 0 6px; font-family: 'Fraunces', serif; font-size: 1.15rem; }
+  .framework-card p { color: #3D4F5C; font-size: 0.95rem; margin: 0 0 14px; flex: 1; }
+  .framework-card .open-link {
+    align-self: flex-start;
+    color: var(--turquoise-deep);
+    font-weight: 800;
+    font-size: 0.95rem;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .framework-card:hover .open-link { color: var(--coral); }
+
+  /* ========== BOOKS ========== */
+  .books-section {
+    background: linear-gradient(180deg, var(--sand) 0%, #ECF5F4 100%);
+    border-top: 1px solid #E6ECF0;
+  }
+  .books-grid {
+    display: grid;
+    gap: 36px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .book-card {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  .book-card:hover { transform: translateY(-6px); }
+  .book-card .book-cover {
+    position: relative;
+    aspect-ratio: 2 / 3;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow:
+      0 14px 40px rgba(10, 31, 46, 0.25),
+      inset -8px 0 14px -8px rgba(0,0,0,0.4),
+      inset 4px 0 8px -4px rgba(255,255,255,0.18);
+    background-size: cover;
+    background-position: center;
+    background-color: #0A1F2E;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .book-card:hover .book-cover {
+    box-shadow:
+      0 22px 50px rgba(10, 31, 46, 0.35),
+      inset -8px 0 14px -8px rgba(0,0,0,0.4),
+      inset 4px 0 8px -4px rgba(255,255,255,0.18);
+  }
+  /* "Spine" highlight along left edge for realism */
+  .book-card .book-cover::before {
+    content: "";
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 8px;
+    background: linear-gradient(90deg, rgba(0,0,0,0.35), transparent);
+    pointer-events: none;
+  }
+  .book-card .book-cover::after {
+    content: "";
+    position: absolute; right: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08));
+    pointer-events: none;
+  }
+
+  /* Fallback cover styling — used when no image URL is set */
+  .book-card .book-fallback {
+    position: absolute; inset: 0;
+    padding: 26px 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left;
+    color: var(--white);
+  }
+  .book-card .book-fallback .fb-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 1.55rem;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  }
+  .book-card .book-fallback .fb-sub {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold-on-dark);
+    margin-top: 8px;
+    line-height: 1.3;
+  }
+  .book-card .book-fallback .fb-author {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+  }
+  .book-card .book-fallback .fb-glow {
+    position: absolute;
+    width: 160px; height: 160px;
+    right: -40px; top: 30%;
+    border-radius: 50%;
+    filter: blur(40px);
+    pointer-events: none;
+  }
+  /* Tone variants */
+  .book-card.tone-navy  .book-cover { background-image: linear-gradient(160deg, #0A1F2E 0%, #1A3A5C 100%); }
+  .book-card.tone-navy  .fb-glow    { background: rgba(0, 191, 166, 0.4); }
+  .book-card.tone-coral .book-cover { background-image: linear-gradient(160deg, #1A3A5C 0%, #003D5B 60%, #C44536 130%); }
+  .book-card.tone-coral .fb-glow    { background: rgba(255, 140, 66, 0.45); }
+  .book-card.tone-teal  .book-cover { background-image: linear-gradient(160deg, #003D5B 0%, #006D77 100%); }
+  .book-card.tone-teal  .fb-glow    { background: rgba(244, 196, 48, 0.35); }
+
+  .book-card .book-info {
+    margin-top: 18px;
+    padding: 0 6px;
+  }
+  .book-card .book-info h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.15rem;
+    margin: 0 0 4px;
+    color: var(--ink);
+  }
+  .book-card .book-info .book-sub {
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    font-style: italic;
+    margin: 0 0 8px;
+    line-height: 1.4;
+  }
+  .book-card .book-info .book-desc {
+    color: #3D4F5C;
+    font-size: 0.88rem;
+    margin: 0 0 10px;
+    line-height: 1.5;
+  }
+  .book-card .book-info .book-cta {
+    color: var(--turquoise-deep);
+    font-weight: 800;
+    font-size: 0.9rem;
+  }
+  .book-card:hover .book-cta { color: var(--coral); }
+
+  /* ========== PDFs ========== */
+  .pdf-section {
+    background: linear-gradient(180deg, var(--sand) 0%, #e6f7f4 100%);
+  }
+  .pdf-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .pdf-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-card);
+  }
+  .pdf-thumb {
+    aspect-ratio: 3 / 4;
+    background: linear-gradient(135deg, #ffffff 0%, #f4f8fb 100%);
+    display: grid; place-items: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid #eef3f6;
+  }
+  .pdf-thumb canvas {
+    max-width: 100%;
+    max-height: 100%;
+    box-shadow: 0 2px 12px rgba(15,42,60,0.08);
+  }
+  .pdf-thumb .pdf-icon {
+    font-size: 60px;
+    color: var(--coral);
+    opacity: 0.65;
+  }
+  .pdf-thumb .loading {
+    position: absolute; bottom: 10px; left: 10px;
+    font-size: 0.75rem; color: #8aa0ad;
+  }
+  .pdf-card .body { padding: 16px 20px 22px; }
+  .pdf-card h3 { font-size: 1.1rem; font-family: 'Fraunces', serif; margin-bottom: 6px; }
+  .pdf-card p { color: #5a6d7a; font-size: 0.88rem; margin: 0; }
+  .pdf-card .open-link { margin-top: 12px; color: var(--turquoise-deep); font-weight: 800; font-size: 0.9rem; }
+
+  /* ========== ABOUT ========== */
+  .about-section {
+    background: linear-gradient(135deg, var(--sea) 0%, var(--turquoise-deep) 100%);
+    color: white;
+    text-align: center;
+  }
+  .about-section h2 { color: white; }
+  .about-section .eyebrow {
+    color: var(--gold-on-dark);
+    background: rgba(244, 196, 48, 0.12);
+  }
+  .about-section p { max-width: 720px; margin: 0 auto 20px; color: rgba(255,255,255,0.92); font-size: 1.08rem; }
+
+  /* Caribbean flag strip */
+  .flag-strip {
+    max-width: 880px;
+    margin: 28px auto 0;
+    padding: 18px 22px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(244, 196, 48, 0.35);
+    border-radius: 22px;
+    text-align: center;
+  }
+  .flag-strip-label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold-on-dark);
+    margin-bottom: 12px;
+  }
+  .flag-row {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 6px 10px;
+  }
+  .flag-row .flag {
+    font-size: 1.7rem;
+    line-height: 1;
+    cursor: default;
+    transition: transform 0.2s ease;
+    display: inline-block;
+  }
+  .flag-row .flag:hover, .flag-row .flag:focus-visible {
+    transform: scale(1.18) translateY(-2px);
+  }
+
+  /* ========== CONTACT ========== */
+  .contact-section { background: linear-gradient(180deg, var(--white) 0%, var(--sand) 100%); }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 28px;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .contact-card {
+    background: var(--white);
+    border: 1px solid #E6ECF0;
+    border-radius: 18px;
+    box-shadow: var(--shadow-soft);
+    padding: 28px 28px 22px;
+  }
+  .contact-card label { display: block; font-weight: 700; font-size: 0.9rem; color: var(--ink); margin: 14px 0 6px; }
+  .contact-card input[type="text"],
+  .contact-card input[type="email"],
+  .contact-card select,
+  .contact-card textarea {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid #D8E1E7;
+    border-radius: 10px;
+    font-family: inherit; font-size: 1rem;
+    background: var(--white); color: var(--ink);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .contact-card textarea { resize: vertical; min-height: 120px; }
+  .contact-card input:focus, .contact-card select:focus, .contact-card textarea:focus {
+    outline: none;
+    border-color: var(--turquoise);
+    box-shadow: 0 0 0 3px rgba(0, 105, 111, 0.18);
+  }
+  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .contact-actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin-top: 18px; }
+  .contact-linkedin {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: #0A66C2;
+    text-decoration: none;
+    font-weight: 800; font-size: 0.95rem;
+    padding: 9px 14px;
+    border-radius: 999px;
+    background: rgba(10, 102, 194, 0.08);
+    transition: background 0.15s ease;
+  }
+  .contact-linkedin:hover { background: rgba(10, 102, 194, 0.16); }
+  .form-msg { min-height: 1.2em; font-weight: 700; font-size: 0.92rem; margin: 14px 0 0; }
+  .form-msg.error { color: var(--coral); }
+  .form-msg.ok    { color: var(--palm); }
+  .contact-aside {
+    background: var(--sea);
+    color: var(--white);
+    border-radius: 18px;
+    padding: 28px 26px;
+    box-shadow: var(--shadow-soft);
+    align-self: start;
+  }
+  .contact-aside h3 { color: var(--white); margin-bottom: 12px; font-size: 1.1rem; letter-spacing: 0.02em; }
+  .contact-aside ul { padding-left: 18px; margin: 0 0 14px; color: rgba(255,255,255,0.9); }
+  .contact-aside ul li { margin: 0 0 6px; line-height: 1.5; }
+  .contact-aside .aside-note { font-size: 0.86rem; color: rgba(255,255,255,0.75); margin: 0; }
+  @media (max-width: 780px) {
+    .contact-grid { grid-template-columns: 1fr; }
+    .row-2 { grid-template-columns: 1fr; }
+  }
+
+  /* ========== FOOTER ========== */
+  footer {
+    background: var(--navy);
+    color: rgba(255,255,255,0.85);
+    padding: 50px 24px 22px;
+  }
+  .footer-grid {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1.4fr;
+    gap: 36px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+  }
+  .footer-col h4 {
+    color: var(--white);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.82rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin: 0 0 12px;
+  }
+  .footer-col ul { list-style: none; padding: 0; margin: 0; }
+  .footer-col ul li { margin: 0 0 8px; }
+  .footer-col ul a {
+    color: rgba(255,255,255,0.78);
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+  .footer-col ul a:hover { color: var(--white); }
+  footer .footer-name {
+    font-family: 'Fraunces', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--white);
+    margin: 0 0 6px;
+  }
+  footer .footer-tag {
+    font-size: 0.92rem;
+    color: rgba(255,255,255,0.7);
+    margin: 0;
+    max-width: 320px;
+  }
+  .footer-linkedin {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: rgba(255,255,255,0.95);
+    text-decoration: none;
+    font-weight: 700;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    transition: background 0.15s ease;
+  }
+  .footer-linkedin:hover { background: rgba(255,255,255,0.18); }
+  .footer-bottom {
+    max-width: 1080px; margin: 0 auto;
+    padding-top: 18px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .footer-bottom p { font-size: 0.82rem; margin: 0; color: rgba(255,255,255,0.6); }
+  footer .reset {
+    background: transparent; border: 1px solid rgba(255,255,255,0.25);
+    color: rgba(255,255,255,0.7); padding: 6px 12px; border-radius: 999px;
+    font-size: 0.78rem; cursor: pointer;
+  }
+  footer .reset:hover { background: rgba(255,255,255,0.08); color: white; }
+  @media (max-width: 720px) {
+    .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+  }
+
+  /* ========== MODALS ========== */
+  .modal-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(15, 42, 60, 0.78);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: none;
+    align-items: center; justify-content: center;
+    z-index: 1000;
+    padding: 24px;
+    animation: fadeIn 0.25s ease;
+  }
+  .modal-backdrop.open { display: flex; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .modal {
+    background: var(--white);
+    border-radius: 22px;
+    width: 100%;
+    max-width: 480px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+    animation: pop 0.3s ease;
+    position: relative;
+  }
+  @keyframes pop { from { transform: translateY(20px) scale(0.96); opacity: 0; } to { transform: none; opacity: 1; } }
+
+  /* Email gate modal */
+  .gate-modal .gate-banner {
+    background: linear-gradient(135deg, var(--sunset), var(--coral));
+    color: white;
+    padding: 30px 28px;
+    text-align: center;
+  }
+  .gate-modal .gate-banner h3 { color: white; font-size: 1.6rem; margin-bottom: 6px; }
+  .gate-modal .gate-banner p { margin: 0; opacity: 0.95; font-size: 0.98rem; }
+  .gate-modal .gate-body { padding: 24px 28px 28px; }
+  .gate-modal label { font-weight: 700; font-size: 0.9rem; color: var(--navy); display: block; margin-bottom: 6px; }
+  .gate-modal input[type="email"], .gate-modal input[type="text"] {
+    width: 100%;
+    padding: 12px 14px;
+    font-family: inherit;
+    font-size: 1rem;
+    border: 1.5px solid #d8e1e7;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .gate-modal input:focus { outline: none; border-color: var(--turquoise); box-shadow: 0 0 0 3px rgba(0,191,166,0.15); }
+  .gate-modal .checkbox-row {
+    display: flex; gap: 8px; align-items: flex-start;
+    font-size: 0.85rem; color: #5a6d7a; margin: 6px 0 16px;
+  }
+  .gate-modal .checkbox-row input { margin-top: 4px; }
+  .gate-modal .err { color: var(--coral); font-size: 0.85rem; margin: 0 0 10px; min-height: 1.2em; }
+  .gate-modal .btn-row { display: flex; gap: 10px; }
+  .gate-modal .btn-row .btn { flex: 1; justify-content: center; }
+
+  /* PDF viewer modal */
+  .pdf-modal {
+    max-width: 1000px;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .pdf-modal .pdf-header {
+    padding: 14px 20px;
+    background: var(--navy);
+    color: white;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 14px;
+  }
+  .pdf-modal .pdf-header h3 { color: white; margin: 0; font-size: 1.1rem; font-family: 'Nunito', sans-serif; font-weight: 700; }
+  .pdf-modal .pdf-controls { display: flex; align-items: center; gap: 8px; }
+  .pdf-modal .pdf-controls button {
+    background: rgba(255,255,255,0.12);
+    border: none; color: white;
+    padding: 6px 10px; border-radius: 8px; cursor: pointer; font-weight: 700;
+  }
+  .pdf-modal .pdf-controls button:hover { background: rgba(255,255,255,0.25); }
+  .pdf-modal .pdf-controls button:disabled { opacity: 0.4; cursor: not-allowed; }
+  .pdf-modal .pdf-controls .page-info { font-size: 0.9rem; min-width: 70px; text-align: center; }
+  .pdf-modal .pdf-viewer-area {
+    flex: 1;
+    overflow: auto;
+    background: #2a3e4c;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .pdf-modal canvas {
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.45);
+    pointer-events: none;
+  }
+  .pdf-modal .pdf-footer-note {
+    padding: 8px 16px;
+    text-align: center;
+    background: #18293a;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.78rem;
+  }
+  .close-x {
+    background: rgba(255,255,255,0.12);
+    border: none; color: white;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    cursor: pointer; font-size: 1.2rem;
+    display: grid; place-items: center;
+  }
+  .close-x:hover { background: rgba(255,255,255,0.25); }
+
+  /* Video modal */
+  .video-modal {
+    max-width: 960px;
+    background: #000;
+  }
+  .video-modal .video-modal-frame { aspect-ratio: 16 / 9; width: 100%; }
+  .video-modal .video-modal-frame iframe,
+  .video-modal .video-modal-frame video { width: 100%; height: 100%; border: 0; }
+  .video-modal .video-modal-close {
+    position: absolute; top: 10px; right: 10px;
+    background: rgba(0,0,0,0.6); border: none; color: white;
+    width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 1.2rem;
+    z-index: 2;
+  }
+
+  /* ===== Mobile ===== */
+  @media (max-width: 820px) {
+    .video-card { grid-template-columns: 1fr; }
+    .video-meta { padding: 26px 24px 30px; }
+    section.block { padding: 60px 20px; }
+    .palm { font-size: 110px; bottom: 60px; }
+  }
+  @media (max-width: 480px) {
+    .hero { padding-top: 80px; }
+    .palm { display: none; }
+    .sun { width: 280px; height: 280px; top: 40px; right: -90px; }
+  }
+
+  /* Prevent accidental selection of PDF text via OS gestures */
+  .pdf-viewer-area * { -webkit-user-drag: none; }
+</style>
+</head>
+<body oncontextmenu="return handleContextMenu(event)">
+
+<!-- ============ TOP NAV ============ -->
+<nav class="top-nav" aria-label="Primary">
+  <a href="#" class="logo" id="nav-logo">Island Mind Lab</a>
+  <ul class="nav-links">
+    <li><a href="#apps">Apps</a></li>
+    <li><a href="#frameworks">Frameworks</a></li>
+    <li><a href="#books">Books</a></li>
+    <li><a href="#pdfs">Publications</a></li>
+    <li><a href="#video">Featured</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="https://www.linkedin.com/in/jowallah" target="_blank" rel="noopener" class="nav-linkedin" aria-label="LinkedIn profile">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+      <path fill="currentColor" d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M18.5 18.5V13.2A3.26 3.26 0 0 0 15.24 9.94C14.39 9.94 13.4 10.46 12.92 11.24V10.13H10.13V18.5H12.92V13.57C12.92 12.8 13.54 12.17 14.31 12.17A1.4 1.4 0 0 1 15.71 13.57V18.5H18.5M6.88 8.56A1.68 1.68 0 0 0 8.56 6.88C8.56 5.95 7.81 5.19 6.88 5.19A1.69 1.69 0 0 0 5.19 6.88C5.19 7.81 5.95 8.56 6.88 8.56M8.27 18.5V10.13H5.5V18.5H8.27Z"/>
+    </svg>
+    <span>LinkedIn</span>
+  </a>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="ai-badge" role="img" aria-label="AI-powered tools">
+      <svg class="ai-icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path fill="currentColor" d="M16 2 L18.2 12.4 L28 14.6 L18.2 16.8 L16 27.2 L13.8 16.8 L4 14.6 L13.8 12.4 Z"/>
+        <path fill="currentColor" opacity="0.85" d="M25 4 L25.9 7.1 L29 8 L25.9 8.9 L25 12 L24.1 8.9 L21 8 L24.1 7.1 Z"/>
+        <path fill="currentColor" opacity="0.75" d="M6 22 L6.9 25.1 L10 26 L6.9 26.9 L6 30 L5.1 26.9 L2 26 L5.1 25.1 Z"/>
+      </svg>
+      <span>AI&nbsp;Powered</span>
+    </div>
+    <br/>
+    <span class="tagline" id="hero-tagline">🇯🇲 🇹🇹 🇧🇧 🇬🇾 🇱🇨 🇧🇸 Across the Caribbean Region</span>
+    <h1>
+      <span class="accent-script" id="hero-script">Island Mind Lab</span>
+      <span id="hero-title">Apps, Docs &amp; Stories from the Caribbean</span>
+    </h1>
+    <p class="lead" id="hero-lead">
+      A curated home for the tools, papers, and videos I build with AI — designed and dreamt in the Caribbean.
+    </p>
+    <div class="hero-cta">
+      <button class="btn btn-primary" onclick="scrollToId('apps')">View the Work</button>
+      <button class="btn btn-ghost" onclick="scrollToId('contact')">Book a Speaking Engagement</button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ VIDEO OF THE WEEK ============ -->
+<section id="video" class="block video-section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Featured</span>
+      <h2>Video of the Week</h2>
+      <p>A fresh story, lesson, or behind-the-scenes look — refreshed every Sunday.</p>
+    </div>
+    <div class="video-card" id="video-card">
+      <div class="video-frame" id="video-frame">
+        <div class="video-poster" id="video-poster">
+          <div class="play-btn">▶</div>
+        </div>
+      </div>
+      <div class="video-meta">
+        <span class="badge">New this week</span>
+        <h3 id="video-title">Loading…</h3>
+        <p id="video-desc"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ APPS ============ -->
+<section id="apps" class="block apps-section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Applications</span>
+      <h2>Tools &amp; Platforms</h2>
+      <p>A working portfolio of original tools for Caribbean educators, learners, and institutions.</p>
+    </div>
+    <div class="grid" id="apps-grid"></div>
+  </div>
+</section>
+
+<!-- ============ FRAMEWORKS & TOOLS ============ -->
+<section id="frameworks" class="block frameworks-section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Frameworks &amp; Tools</span>
+      <h2>Worksheets &amp; diagnostics</h2>
+      <p>Practical instruments used in workshops, faculty development, and institutional planning. Click any card to open the resource in a new tab.</p>
+    </div>
+    <div class="grid" id="frameworks-grid"></div>
+  </div>
+</section>
+
+<!-- ============ BOOKS ============ -->
+<section id="books" class="block books-section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Books</span>
+      <h2>Published works by Dr. Rohan Jowallah</h2>
+      <p>A growing list of books on AI, education, workforce readiness, and inclusive practice. Click a cover to learn more or purchase.</p>
+    </div>
+    <div class="books-grid" id="books-grid"></div>
+  </div>
+</section>
+
+<!-- ============ PDFs ============ -->
+<section id="pdfs" class="block pdf-section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Publications</span>
+      <h2>Documents &amp; Reports</h2>
+      <p>Open any cover to read. All documents render in a secure in-page viewer — no downloads.</p>
+    </div>
+    <div class="grid" id="pdfs-grid"></div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about" class="block about-section">
+  <div class="container">
+    <span class="eyebrow">About</span>
+    <h2>Caribbean AI &amp; Education, made original.</h2>
+    <p id="about-text">
+      A home for the apps, papers, and videos I build —
+      original work, made for learners and dreamers across the islands and beyond.
+    </p>
+
+    <div class="flag-strip" role="group" aria-label="Built across the Caribbean region">
+      <span class="flag-strip-label">Built across the region</span>
+      <div class="flag-row">
+        <span class="flag" title="Jamaica" aria-label="Jamaica">🇯🇲</span>
+        <span class="flag" title="Trinidad and Tobago" aria-label="Trinidad and Tobago">🇹🇹</span>
+        <span class="flag" title="Barbados" aria-label="Barbados">🇧🇧</span>
+        <span class="flag" title="Guyana" aria-label="Guyana">🇬🇾</span>
+        <span class="flag" title="Bahamas" aria-label="Bahamas">🇧🇸</span>
+        <span class="flag" title="Belize" aria-label="Belize">🇧🇿</span>
+        <span class="flag" title="Saint Lucia" aria-label="Saint Lucia">🇱🇨</span>
+        <span class="flag" title="Saint Vincent and the Grenadines" aria-label="Saint Vincent and the Grenadines">🇻🇨</span>
+        <span class="flag" title="Grenada" aria-label="Grenada">🇬🇩</span>
+        <span class="flag" title="Dominica" aria-label="Dominica">🇩🇲</span>
+        <span class="flag" title="Antigua and Barbuda" aria-label="Antigua and Barbuda">🇦🇬</span>
+        <span class="flag" title="Saint Kitts and Nevis" aria-label="Saint Kitts and Nevis">🇰🇳</span>
+        <span class="flag" title="Suriname" aria-label="Suriname">🇸🇷</span>
+        <span class="flag" title="Haiti" aria-label="Haiti">🇭🇹</span>
+        <span class="flag" title="Dominican Republic" aria-label="Dominican Republic">🇩🇴</span>
+        <span class="flag" title="Cuba" aria-label="Cuba">🇨🇺</span>
+        <span class="flag" title="Puerto Rico" aria-label="Puerto Rico">🇵🇷</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="block contact-section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Contact</span>
+      <h2>Speaking, consulting &amp; collaboration</h2>
+      <p>For keynote invitations, institutional consulting, media requests, or to discuss a project — drop a message below or reach out on LinkedIn.</p>
+    </div>
+
+    <div class="contact-grid">
+      <form id="contact-form" class="contact-card" novalidate>
+        <div class="row-2">
+          <div>
+            <label for="c-name">Full name</label>
+            <input type="text" id="c-name" autocomplete="name" required />
+          </div>
+          <div>
+            <label for="c-email">Email</label>
+            <input type="email" id="c-email" autocomplete="email" required />
+          </div>
+        </div>
+        <div class="row-2">
+          <div>
+            <label for="c-org">Organisation (optional)</label>
+            <input type="text" id="c-org" autocomplete="organization" />
+          </div>
+          <div>
+            <label for="c-type">Type of inquiry</label>
+            <select id="c-type" required>
+              <option value="Speaking engagement">Speaking engagement / keynote</option>
+              <option value="Consulting">Consulting &amp; advisory</option>
+              <option value="Workshop / training">Workshop or training</option>
+              <option value="Media">Media / press</option>
+              <option value="Partnership">Partnership / collaboration</option>
+              <option value="General inquiry">General inquiry</option>
+            </select>
+          </div>
+        </div>
+        <label for="c-subject">Subject</label>
+        <input type="text" id="c-subject" required />
+
+        <label for="c-message">Message</label>
+        <textarea id="c-message" rows="6" required placeholder="Tell me about your event, audience, dates, or what you'd like to discuss…"></textarea>
+
+        <p class="form-msg" id="c-msg" aria-live="polite"></p>
+        <div class="contact-actions">
+          <button type="submit" class="btn btn-primary">Send message</button>
+          <a class="contact-linkedin" href="https://www.linkedin.com/in/jowallah" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+              <path fill="currentColor" d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M18.5 18.5V13.2A3.26 3.26 0 0 0 15.24 9.94C14.39 9.94 13.4 10.46 12.92 11.24V10.13H10.13V18.5H12.92V13.57C12.92 12.8 13.54 12.17 14.31 12.17A1.4 1.4 0 0 1 15.71 13.57V18.5H18.5M6.88 8.56A1.68 1.68 0 0 0 8.56 6.88C8.56 5.95 7.81 5.19 6.88 5.19A1.69 1.69 0 0 0 5.19 6.88C5.19 7.81 5.95 8.56 6.88 8.56M8.27 18.5V10.13H5.5V18.5H8.27Z"/>
+            </svg>
+            Connect on LinkedIn
+          </a>
+        </div>
+      </form>
+
+      <aside class="contact-aside">
+        <h3>What to include</h3>
+        <ul>
+          <li>Event name, audience, and approximate size</li>
+          <li>Date(s) and location (in-person or virtual)</li>
+          <li>Topic or theme you'd like covered</li>
+          <li>Budget range and any honorarium policy</li>
+          <li>Deadlines for confirmation</li>
+        </ul>
+        <p class="aside-note">Replies typically within 2 business days. For time-sensitive media requests, please mark the subject line <b>URGENT</b>.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <p class="footer-name" id="footer-name">Island Mind Lab</p>
+      <p class="footer-tag">Caribbean AI &amp; education — original tools, papers, and talks.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="#apps">Apps</a></li>
+        <li><a href="#frameworks">Frameworks &amp; Tools</a></li>
+        <li><a href="#books">Books</a></li>
+        <li><a href="#pdfs">Publications</a></li>
+        <li><a href="#video">Featured video</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <a class="footer-linkedin" href="https://www.linkedin.com/in/jowallah" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <path fill="currentColor" d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M18.5 18.5V13.2A3.26 3.26 0 0 0 15.24 9.94C14.39 9.94 13.4 10.46 12.92 11.24V10.13H10.13V18.5H12.92V13.57C12.92 12.8 13.54 12.17 14.31 12.17A1.4 1.4 0 0 1 15.71 13.57V18.5H18.5M6.88 8.56A1.68 1.68 0 0 0 8.56 6.88C8.56 5.95 7.81 5.19 6.88 5.19A1.69 1.69 0 0 0 5.19 6.88C5.19 7.81 5.95 8.56 6.88 8.56M8.27 18.5V10.13H5.5V18.5H8.27Z"/>
+        </svg>
+        linkedin.com/in/jowallah
+      </a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span id="year"></span> Rohan Jowallah. All apps &amp; content original. All rights reserved.</p>
+    <button class="reset" onclick="resetGate()">Reset access</button>
+  </div>
+</footer>
+
+<!-- ============ EMAIL GATE MODAL ============ -->
+<div class="modal-backdrop" id="gate-backdrop">
+  <div class="modal gate-modal">
+    <div class="gate-banner">
+      <h3>One quick step</h3>
+      <p>Leave your name &amp; email to unlock the apps, documents, and featured video.</p>
+    </div>
+    <div class="gate-body">
+      <form id="gate-form" novalidate>
+        <label for="gate-name">Your name</label>
+        <input type="text" id="gate-name" placeholder="e.g. Tasha" autocomplete="name" required />
+
+        <label for="gate-email">Email address</label>
+        <input type="email" id="gate-email" placeholder="you@example.com" autocomplete="email" required />
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="gate-consent" />
+          <label for="gate-consent" style="font-weight:400; margin:0;">
+            I'm okay with my email being saved on this device so I don't have to enter it again.
+          </label>
+        </div>
+
+        <p class="err" id="gate-err"></p>
+        <div class="btn-row">
+          <button type="submit" class="btn btn-primary">Unlock 🔓</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PDF VIEWER MODAL ============ -->
+<div class="modal-backdrop" id="pdf-backdrop">
+  <div class="modal pdf-modal" oncontextmenu="return false;">
+    <div class="pdf-header">
+      <h3 id="pdf-modal-title">Document</h3>
+      <div class="pdf-controls">
+        <button id="pdf-prev" title="Previous">‹ Prev</button>
+        <span class="page-info"><span id="pdf-page">1</span> / <span id="pdf-pages">1</span></span>
+        <button id="pdf-next" title="Next">Next ›</button>
+        <button class="close-x" onclick="closePdfModal()" title="Close" aria-label="Close">✕</button>
+      </div>
+    </div>
+    <div class="pdf-viewer-area" id="pdf-viewer-area">
+      <canvas id="pdf-canvas"></canvas>
+    </div>
+    <div class="pdf-footer-note">View only — downloading and printing disabled. 🌴</div>
+  </div>
+</div>
+
+<!-- ============ VIDEO MODAL ============ -->
+<div class="modal-backdrop" id="video-backdrop">
+  <div class="modal video-modal">
+    <button class="video-modal-close" onclick="closeVideoModal()" aria-label="Close">✕</button>
+    <div class="video-modal-frame" id="video-modal-frame"></div>
+  </div>
+</div>
+
+
+<!-- =========================================================================
+     SITE CONFIG — EDIT THIS BLOCK TO CHANGE YOUR CONTENT
+     The admin dashboard (admin.html) generates a fresh copy of everything
+     between CONFIG-START and CONFIG-END for you to paste back here.
+========================================================================== -->
+<!-- CONFIG-START -->
+<script id="site-config">
+  // ----- Basic branding -----
+  const SITE = {
+    name:           "Island Mind Lab",
+    tagline:        "🇯🇲 🇹🇹 🇧🇧 🇬🇾 🇱🇨 🇧🇸 Across the Caribbean Region",
+    heroScript:     "Dr. Rohan Jowallah",
+    heroTitle:      "AI for Caribbean Education, Workforce & Policy",
+    heroLead:       "Original tools, publications, and talks that put Caribbean learners, educators, and institutions at the centre of the AI conversation.",
+    aboutText:      "An advisory and design practice producing original AI-powered tools, publications, and talks for Caribbean education, workforce development, and policy.",
+    sheetsEndpoint: "" // Paste your Google Apps Script Web App URL to capture signups and contact messages to a Sheet
+  };
+
+  // ----- Video of the Week -----
+  // type: "youtube" | "vimeo" | "file"
+  // For YouTube: id is the watch ID (the bit after v=)
+  // For Vimeo:   id is the numeric video id
+  // For file:    id is the URL to a .mp4 (must be hosted somewhere CORS-friendly)
+  // Set VIDEO_OF_WEEK = null  (or change enabled: false) to hide the whole section.
+  const VIDEO_OF_WEEK = {
+    enabled:     true,
+    title:       "Video of the Week",
+    description: "This week's featured reel — click play to watch.",
+    type:        "youtube",        // "youtube" | "vimeo" | "file"
+    id:          "OLQok77eGwM",    // YouTube video ID from https://youtu.be/OLQok77eGwM
+    poster:      ""                // leave "" to auto-use YouTube thumbnail
+  };
+
+  // ----- Apps -----
+  // Each app: name, description, image (URL or "" for fallback), url (the link, hidden from view)
+  const APPS = [
+    {
+      name: "Sovereign Learning Designer",
+      description: "Design learner-centred, culturally-rooted course experiences that honour student voice and agency.",
+      image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=900&q=80",
+      url: "https://sovereign-learning-designer.vercel.app/",
+      ribbon: "Flagship"
+    },
+    {
+      name: "AI Literacy Framework",
+      description: "A structured framework to grow AI literacy across staff, faculty, and learners — from first principles to applied practice.",
+      image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=900&q=80",
+      url: "https://ai-literacy-framework.vercel.app/"
+    },
+    {
+      name: "Caribbean EduReport AI",
+      description: "Turn raw classroom and institutional data into clear, decision-ready education reports for Caribbean leaders.",
+      image: "https://images.unsplash.com/photo-1551836022-deb4988cc6c0?w=900&q=80",
+      url: "https://caribbean-edureport-ai.vercel.app/login"
+    },
+    {
+      name: "Jamaica National Literacy",
+      description: "A literacy companion built around Jamaican learners — phonics, fluency, and comprehension with local voices.",
+      image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=900&q=80",
+      url: "https://jamnationaljamaica-literacy-lxwmot4mw-rj952s-projects.vercel.app/",
+      ribbon: "Jamaica"
+    },
+    {
+      name: "Caribbean AI Implementation Planner",
+      description: "A step-by-step planner for schools, universities, and ministries rolling out AI responsibly across the region.",
+      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=900&q=80",
+      url: "https://caribbean-ai-implementation-planner.vercel.app/"
+    },
+    {
+      name: "Pedagogical Integrity Planner",
+      description: "Redesign assessments and learning tasks so that academic integrity holds firm in the age of generative AI.",
+      image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=900&q=80",
+      url: "https://pedagogical-integrity-planner.vercel.app/"
+    },
+    {
+      name: "AI-Ready Workforce Companion",
+      description: "Help workers and TVET learners build the human + AI skills employers across the Caribbean are now hiring for.",
+      image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=900&q=80",
+      url: "https://ai-ready-workforce-companion.vercel.app/"
+    },
+    {
+      name: "Freirean Assessment Designer",
+      description: "Design assessments grounded in Paulo Freire's problem-posing pedagogy — dialogical, critical, and emancipatory.",
+      image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=900&q=80",
+      url: "https://freirean-assessment-designer.vercel.app/"
+    },
+    {
+      name: "CompetencyFolio",
+      description: "Build, evidence, and showcase stackable competencies — a portfolio-led credential builder for modern learners.",
+      image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=900&q=80",
+      url: "https://competencyfolio.vercel.app/",
+      ribbon: "New"
+    }
+  ];
+
+  // ----- Frameworks & Tools -----
+  // External resources (Google Docs, Sheets, Notion, etc.) that open in a new tab after the email gate.
+  // kind: "doc" | "sheet" | "external"  (controls the icon)
+  const FRAMEWORKS = [
+    {
+      name: "The CARE Framework — Ethical AI Decision-Making Worksheet",
+      description: "A guided worksheet for faculty to make ethical, evidence-informed decisions about integrating AI into teaching and learning. Walks through stakeholder analysis, bias examination, values alignment, and impact evaluation.",
+      image: "https://drive.google.com/thumbnail?id=1CT6QbLJkXU2YySp4xhKyUM99gGx6vfhtPvsA4egjeZQ&sz=w800",
+      url:   "https://docs.google.com/document/d/1CT6QbLJkXU2YySp4xhKyUM99gGx6vfhtPvsA4egjeZQ/edit?usp=sharing",
+      kind:  "doc",
+      ribbon: "Framework"
+    },
+    {
+      name: "AI Ready — Literacy Diagnostic",
+      description: "A practical workbook for assessing and building AI readiness and literacy across an institution or team. Use it as a self-audit or a workshop instrument.",
+      image: "https://drive.google.com/thumbnail?id=1pRiGe3z4jL460HLsUFwPaq9MJxPUNeKG&sz=w800",
+      url:   "https://docs.google.com/spreadsheets/d/1pRiGe3z4jL460HLsUFwPaq9MJxPUNeKG/edit?usp=sharing",
+      kind:  "sheet",
+      ribbon: "Diagnostic"
+    }
+  ];
+
+  // ----- Books -----
+  // Published books by Dr. Rohan Jowallah. Clicking opens the purchase URL in a new tab.
+  // To add a real cover image: upload the cover to your repo or any image host and
+  // paste the URL into `image`. Leave `image` blank for an elegant styled fallback.
+  const BOOKS = [
+    {
+      title:    "AI, Pedagogy, and Inclusion",
+      subtitle: "Shaping Pedagogy for a Changing World",
+      author:   "Dr. Rohan Jowallah",
+      year:     "",
+      image:    "https://m.media-amazon.com/images/I/71rrFUMxPPL._SL1500_.jpg",
+      url:      "https://www.amazon.com/s?k=AI+Pedagogy+Inclusion+Rohan+Jowallah",
+      tone:     "navy",
+      description: "A practical and theoretical companion for educators reshaping classrooms in the age of artificial intelligence — with inclusion, equity, and learner voice at the centre."
+    },
+    {
+      title:    "Organizational Inclusivity",
+      subtitle: "Critical Reflection for Transformation",
+      author:   "Dr. Rohan Jowallah",
+      year:     "",
+      image:    "https://m.media-amazon.com/images/I/61BjkrNaoPL._SY425_.jpg",
+      url:      "https://www.amazon.com/s?k=Organizational+Inclusivity+Rohan+Jowallah",
+      tone:     "coral",
+      description: "A field guide for leaders building genuinely inclusive workplaces — grounded in critical reflection and practical transformation strategies."
+    },
+    {
+      title:    "AI-Ready",
+      subtitle: "A Complete Workforce Guide to Working, Leading, and Thriving in the Age of Artificial Intelligence",
+      author:   "Dr. Rohan Jowallah, Ed.D",
+      year:     "",
+      image:    "https://m.media-amazon.com/images/I/41H4nK8diOL._SY445_SX342_QL70_FMwebp_.jpg",
+      url:      "https://www.amazon.com/s?k=AI-Ready+Workforce+Rohan+Jowallah",
+      tone:     "teal",
+      description: "An essential handbook for workers, leaders, and learners preparing for AI-augmented work — covering literacy, ethics, and the new skills the workforce needs now."
+    }
+  ];
+
+  // ----- PDFs -----
+  // url must be a direct link to a .pdf (CORS-enabled host: GitHub raw, Netlify, Vercel, S3 with public read, etc.)
+  // Leave this array empty if you have no PDFs — the whole Publications section will hide automatically.
+  const PDFS = [];
+</script>
+<!-- CONFIG-END -->
+
+<!-- =========================================================================
+     APP CODE — you don't need to edit below unless customizing behaviour.
+========================================================================== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+  // ===== PDF.js worker setup =====
+  if (window['pdfjsLib']) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+  }
+
+  // ===== Helpers =====
+  const $ = (sel) => document.querySelector(sel);
+  const $$ = (sel) => Array.from(document.querySelectorAll(sel));
+  const GATE_KEY = "iml.gate.v1";
+
+  function isUnlocked() {
+    try { return !!JSON.parse(localStorage.getItem(GATE_KEY) || "null"); }
+    catch { return false; }
+  }
+  function saveGate(name, email, consent) {
+    const record = {
+      name: name.trim(),
+      email: email.trim().toLowerCase(),
+      timestamp: new Date().toISOString(),
+      consent: !!consent,
+      userAgent: navigator.userAgent,
+      page: location.href
+    };
+    if (consent) {
+      localStorage.setItem(GATE_KEY, JSON.stringify(record));
+    } else {
+      // session-only access if they didn't consent
+      sessionStorage.setItem(GATE_KEY, JSON.stringify(record));
+    }
+    // Mirror every submission to the admin's local visit log (for dashboard preview).
+    try {
+      const log = JSON.parse(localStorage.getItem("iml.signup.log") || "[]");
+      log.push(record);
+      // Keep the last 200 only
+      localStorage.setItem("iml.signup.log", JSON.stringify(log.slice(-200)));
+    } catch {}
+    // Send to Google Sheet if configured.
+    sendToSheet(record);
+  }
+
+  function sendToSheet(record) {
+    try {
+      if (!SITE || !SITE.sheetsEndpoint) return;
+      // Apps Script expects text/plain to avoid a CORS preflight.
+      fetch(SITE.sheetsEndpoint, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({
+          name:      record.name,
+          email:     record.email,
+          timestamp: record.timestamp,
+          consent:   record.consent,
+          source:    SITE.name || "Landing page",
+          page:      record.page
+        })
+      }).catch(() => {});
+    } catch {}
+  }
+  function isUnlockedAny() {
+    return !!localStorage.getItem(GATE_KEY) || !!sessionStorage.getItem(GATE_KEY);
+  }
+  function resetGate() {
+    localStorage.removeItem(GATE_KEY);
+    sessionStorage.removeItem(GATE_KEY);
+    alert("Access reset. You'll be asked for your name & email next time.");
+  }
+
+  function scrollToId(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  // ===== Apply config to the page =====
+  function applyConfig() {
+    document.title = SITE.name + " — " + SITE.heroTitle;
+    $("#hero-tagline").textContent = SITE.tagline;
+    $("#hero-script").textContent = SITE.heroScript;
+    $("#hero-title").textContent = SITE.heroTitle;
+    $("#hero-lead").textContent = SITE.heroLead;
+    $("#about-text").textContent = SITE.aboutText;
+    $("#footer-name").textContent = SITE.name;
+    const navLogo = document.getElementById("nav-logo");
+    if (navLogo) navLogo.textContent = SITE.name;
+    $("#year").textContent = new Date().getFullYear();
+
+    renderVideoOfWeek();
+    renderApps();
+    renderFrameworks();
+    renderBooks();
+    renderPdfs();
+    setupContactForm();
+  }
+
+  // ===== Books =====
+  function renderBooks() {
+    const grid = document.getElementById("books-grid");
+    const section = document.getElementById("books");
+    const list = (typeof BOOKS !== "undefined" && Array.isArray(BOOKS)) ? BOOKS : [];
+    if (!list.length) { if (section) section.style.display = "none"; return; }
+    if (section) section.style.display = "";
+    grid.innerHTML = "";
+    list.forEach((book) => {
+      const card = document.createElement("article");
+      card.className = "book-card tone-" + (book.tone || "navy");
+      card.setAttribute("role", "button");
+      card.setAttribute("tabindex", "0");
+      card.setAttribute("aria-label", "Open book: " + book.title);
+
+      const cover = document.createElement("div");
+      cover.className = "book-cover";
+      if (book.image) {
+        cover.style.backgroundImage = `url('${book.image}')`;
+      } else {
+        // Styled fallback cover with title + subtitle + author
+        cover.innerHTML = `
+          <div class="fb-glow"></div>
+          <div class="book-fallback">
+            <div>
+              <div class="fb-title">${escapeHtml(book.title)}</div>
+              <div class="fb-sub">${escapeHtml(book.subtitle || "")}</div>
+            </div>
+            <div class="fb-author">${escapeHtml(book.author || "")}</div>
+          </div>`;
+      }
+      card.appendChild(cover);
+
+      const info = document.createElement("div");
+      info.className = "book-info";
+      info.innerHTML = `
+        <h3>${escapeHtml(book.title)}</h3>
+        ${book.subtitle ? `<p class="book-sub">${escapeHtml(book.subtitle)}</p>` : ""}
+        ${book.description ? `<p class="book-desc">${escapeHtml(book.description)}</p>` : ""}
+        <div class="book-cta">View / Purchase →</div>
+      `;
+      card.appendChild(info);
+
+      const openIt = () => {
+        if (!book.url) return;
+        requireGate(() => window.open(book.url, "_blank", "noopener,noreferrer"));
+      };
+      card.addEventListener("click", openIt);
+      card.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openIt(); }
+      });
+      grid.appendChild(card);
+    });
+  }
+
+  // ===== Frameworks & Tools =====
+  function renderFrameworks() {
+    const grid = document.getElementById("frameworks-grid");
+    if (!grid) return;
+    const list = (typeof FRAMEWORKS !== "undefined" && Array.isArray(FRAMEWORKS)) ? FRAMEWORKS : [];
+    grid.innerHTML = "";
+
+    // Hide the whole section if there's nothing to show
+    const section = document.getElementById("frameworks");
+    if (!list.length) { if (section) section.style.display = "none"; return; }
+    if (section) section.style.display = "";
+
+    list.forEach((fw, idx) => {
+      const card = document.createElement("div");
+      card.className = "framework-card";
+      card.setAttribute("role", "button");
+      card.setAttribute("tabindex", "0");
+      card.setAttribute("aria-label", "Open " + fw.name);
+
+      const kind = (fw.kind || "external").toLowerCase();
+      const iconLabel = kind === "doc" ? "DOC" : kind === "sheet" ? "XLS" : "LINK";
+      const iconClass = kind === "doc" ? "doc" : kind === "sheet" ? "sheet" : "";
+
+      const thumb = document.createElement("div");
+      thumb.className = "fw-thumb";
+      if (fw.image) {
+        thumb.style.backgroundImage = `url('${fw.image}')`;
+        // Fallback if the Drive thumbnail is private/unreachable
+        const probe = new Image();
+        probe.onerror = () => {
+          thumb.style.background = "linear-gradient(135deg, #E6F2F4, #D6E7EA)";
+        };
+        probe.src = fw.image;
+      } else {
+        thumb.style.background = "linear-gradient(135deg, #E6F2F4, #D6E7EA)";
+      }
+      thumb.innerHTML = `<div class="fw-icon ${iconClass}" aria-hidden="true">${iconLabel}</div>`;
+      if (fw.ribbon) {
+        const r = document.createElement("div");
+        r.className = "ribbon";
+        r.textContent = fw.ribbon;
+        thumb.appendChild(r);
+      }
+      card.appendChild(thumb);
+
+      const body = document.createElement("div");
+      body.className = "body";
+      body.innerHTML = `
+        <h3>${escapeHtml(fw.name)}</h3>
+        <p>${escapeHtml(fw.description || "")}</p>
+        <span class="open-link">Open resource →</span>
+      `;
+      card.appendChild(body);
+
+      const openIt = () => {
+        requireGate(() => {
+          window.open(fw.url, "_blank", "noopener,noreferrer");
+        });
+      };
+      card.addEventListener("click", openIt);
+      card.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openIt(); }
+      });
+
+      grid.appendChild(card);
+    });
+  }
+
+  // ===== Contact form =====
+  function setupContactForm() {
+    const form = document.getElementById("contact-form");
+    if (!form) return;
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const msg = document.getElementById("c-msg");
+      msg.className = "form-msg";
+      msg.textContent = "";
+
+      const data = {
+        type:    "contact",
+        kind:    document.getElementById("c-type").value,
+        name:    document.getElementById("c-name").value.trim(),
+        email:   document.getElementById("c-email").value.trim(),
+        org:     document.getElementById("c-org").value.trim(),
+        subject: document.getElementById("c-subject").value.trim(),
+        message: document.getElementById("c-message").value.trim(),
+        timestamp: new Date().toISOString(),
+        source:    SITE.name || "Landing page",
+        page:      location.href
+      };
+
+      // Basic validation
+      if (data.name.length < 2) { msg.className = "form-msg error"; msg.textContent = "Please enter your name."; return; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) { msg.className = "form-msg error"; msg.textContent = "Please enter a valid email address."; return; }
+      if (data.subject.length < 2)  { msg.className = "form-msg error"; msg.textContent = "Please add a subject line."; return; }
+      if (data.message.length < 10) { msg.className = "form-msg error"; msg.textContent = "Please add a few more details so I can respond well."; return; }
+
+      msg.textContent = "Sending…";
+
+      // Local backup so messages are never lost even if Sheets fails
+      try {
+        const log = JSON.parse(localStorage.getItem("iml.contact.log") || "[]");
+        log.push(data);
+        localStorage.setItem("iml.contact.log", JSON.stringify(log.slice(-200)));
+      } catch {}
+
+      // Send to Sheets
+      try {
+        if (SITE.sheetsEndpoint) {
+          await fetch(SITE.sheetsEndpoint, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify(data)
+          });
+        }
+      } catch {}
+
+      // Also offer a mailto fallback the admin can wire to their inbox if desired
+      msg.className = "form-msg ok";
+      msg.textContent = "Thanks — message received. I'll be in touch within 2 business days.";
+      form.reset();
+    });
+  }
+
+  // ===== Video of the Week =====
+  function renderVideoOfWeek() {
+    const section = document.getElementById("video");
+
+    // Hide the section entirely if there's no video configured
+    const hasVideo =
+      VIDEO_OF_WEEK &&
+      VIDEO_OF_WEEK.enabled !== false &&
+      VIDEO_OF_WEEK.id &&
+      String(VIDEO_OF_WEEK.id).trim().length > 0;
+
+    if (!hasVideo) {
+      if (section) section.style.display = "none";
+      return;
+    }
+    if (section) section.style.display = "";
+
+    $("#video-title").textContent = VIDEO_OF_WEEK.title || "Video of the Week";
+    $("#video-desc").textContent  = VIDEO_OF_WEEK.description || "";
+
+    const poster = $("#video-poster");
+    let posterUrl = VIDEO_OF_WEEK.poster;
+    if (!posterUrl && VIDEO_OF_WEEK.type === "youtube") {
+      // Try maxres first, fall back to hqdefault via an Image() probe
+      const hi = `https://i.ytimg.com/vi/${VIDEO_OF_WEEK.id}/maxresdefault.jpg`;
+      const fb = `https://i.ytimg.com/vi/${VIDEO_OF_WEEK.id}/hqdefault.jpg`;
+      const probe = new Image();
+      probe.onload  = () => { poster.style.backgroundImage = `url('${hi}')`; };
+      probe.onerror = () => { poster.style.backgroundImage = `url('${fb}')`; };
+      probe.src = hi;
+      poster.style.backgroundImage = `url('${fb}')`; // immediate fallback so it never looks blank
+      posterUrl = fb;
+    } else if (posterUrl) {
+      poster.style.backgroundImage = `url('${posterUrl}')`;
+    } else {
+      poster.style.background = "linear-gradient(135deg, #006D77, #00BFA6)";
+    }
+
+    // (Re)bind click — replace listener defensively
+    const frame = $("#video-frame");
+    const fresh = frame.cloneNode(true);
+    frame.parentNode.replaceChild(fresh, frame);
+    fresh.addEventListener("click", () => {
+      requireGate(() => openVideoModal());
+    });
+  }
+
+  function openVideoModal() {
+    const frame = $("#video-modal-frame");
+    frame.innerHTML = ""; // clear
+    if (VIDEO_OF_WEEK.type === "youtube") {
+      const iframe = document.createElement("iframe");
+      iframe.src = `https://www.youtube.com/embed/${VIDEO_OF_WEEK.id}?autoplay=1&rel=0`;
+      iframe.allow = "autoplay; encrypted-media; picture-in-picture";
+      iframe.allowFullscreen = true;
+      frame.appendChild(iframe);
+    } else if (VIDEO_OF_WEEK.type === "vimeo") {
+      const iframe = document.createElement("iframe");
+      iframe.src = `https://player.vimeo.com/video/${VIDEO_OF_WEEK.id}?autoplay=1`;
+      iframe.allow = "autoplay; fullscreen; picture-in-picture";
+      iframe.allowFullscreen = true;
+      frame.appendChild(iframe);
+    } else if (VIDEO_OF_WEEK.type === "file") {
+      const video = document.createElement("video");
+      video.src = VIDEO_OF_WEEK.id;
+      video.controls = true;
+      video.autoplay = true;
+      video.controlsList = "nodownload";
+      video.oncontextmenu = () => false;
+      frame.appendChild(video);
+    }
+    $("#video-backdrop").classList.add("open");
+  }
+  function closeVideoModal() {
+    $("#video-backdrop").classList.remove("open");
+    $("#video-modal-frame").innerHTML = "";
+  }
+
+  // ===== Apps =====
+  function renderApps() {
+    const grid = $("#apps-grid");
+    const section = document.getElementById("apps");
+    const list = (typeof APPS !== "undefined" && Array.isArray(APPS)) ? APPS : [];
+    if (!list.length) { if (section) section.style.display = "none"; return; }
+    if (section) section.style.display = "";
+    grid.innerHTML = "";
+    list.forEach((app, idx) => {
+      const card = document.createElement("div");
+      card.className = "app-card";
+      card.dataset.appIdx = idx;
+      card.setAttribute("role", "button");
+      card.setAttribute("tabindex", "0");
+      card.setAttribute("aria-label", "Open " + app.name);
+
+      const thumb = document.createElement("div");
+      thumb.className = "thumb";
+      if (app.image) {
+        thumb.style.backgroundImage = `url('${app.image}')`;
+      } else {
+        thumb.style.background = "linear-gradient(135deg, #00BFA6, #FF8C42)";
+      }
+      if (app.ribbon) {
+        const r = document.createElement("div");
+        r.className = "ribbon";
+        r.textContent = app.ribbon;
+        thumb.appendChild(r);
+      }
+      card.appendChild(thumb);
+
+      const body = document.createElement("div");
+      body.className = "body";
+      body.innerHTML = `
+        <h3>${escapeHtml(app.name)}</h3>
+        <p>${escapeHtml(app.description || "")}</p>
+        <span class="open-link">Open app →</span>
+      `;
+      card.appendChild(body);
+
+      const openIt = () => {
+        requireGate(() => {
+          // open without exposing referrer
+          window.open(app.url, "_blank", "noopener,noreferrer");
+        });
+      };
+      card.addEventListener("click", openIt);
+      card.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openIt(); }
+      });
+
+      grid.appendChild(card);
+    });
+  }
+
+  // ===== PDFs =====
+  function renderPdfs() {
+    const grid = $("#pdfs-grid");
+    const section = document.getElementById("pdfs");
+    const list = (typeof PDFS !== "undefined" && Array.isArray(PDFS)) ? PDFS : [];
+    if (!list.length) { if (section) section.style.display = "none"; return; }
+    if (section) section.style.display = "";
+    grid.innerHTML = "";
+    list.forEach((doc, idx) => {
+      const card = document.createElement("div");
+      card.className = "pdf-card";
+      card.dataset.pdfIdx = idx;
+      card.setAttribute("role", "button");
+      card.setAttribute("tabindex", "0");
+      card.setAttribute("aria-label", "Open " + doc.name);
+
+      const thumb = document.createElement("div");
+      thumb.className = "pdf-thumb";
+      thumb.innerHTML = `<div class="pdf-icon">📄</div><div class="loading">Loading preview…</div>`;
+      card.appendChild(thumb);
+
+      const body = document.createElement("div");
+      body.className = "body";
+      body.innerHTML = `
+        <h3>${escapeHtml(doc.name)}</h3>
+        <p>${escapeHtml(doc.description || "")}</p>
+        <div class="open-link">Read document →</div>
+      `;
+      card.appendChild(body);
+
+      const openIt = () => {
+        requireGate(() => openPdfModal(idx));
+      };
+      card.addEventListener("click", openIt);
+      card.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openIt(); }
+      });
+
+      grid.appendChild(card);
+
+      // Render first-page thumbnail
+      renderPdfThumbnail(doc.url, thumb);
+    });
+  }
+
+  async function renderPdfThumbnail(url, container) {
+    if (!window.pdfjsLib) return;
+    try {
+      const pdf = await pdfjsLib.getDocument(url).promise;
+      const page = await pdf.getPage(1);
+      const viewport = page.getViewport({ scale: 0.6 });
+      const canvas = document.createElement("canvas");
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      const ctx = canvas.getContext("2d");
+      await page.render({ canvasContext: ctx, viewport }).promise;
+      container.innerHTML = "";
+      container.appendChild(canvas);
+    } catch (err) {
+      // Keep the icon fallback
+      const loader = container.querySelector(".loading");
+      if (loader) loader.textContent = "Preview unavailable";
+    }
+  }
+
+  // ===== PDF viewer modal =====
+  let _pdfDoc = null;
+  let _pdfPage = 1;
+
+  async function openPdfModal(idx) {
+    const doc = PDFS[idx];
+    $("#pdf-modal-title").textContent = doc.name;
+    $("#pdf-backdrop").classList.add("open");
+    _pdfPage = 1;
+    try {
+      _pdfDoc = await pdfjsLib.getDocument(doc.url).promise;
+      $("#pdf-pages").textContent = _pdfDoc.numPages;
+      renderPdfPage();
+    } catch (err) {
+      console.error(err);
+      alert("Sorry — couldn't load that document right now.");
+      closePdfModal();
+    }
+  }
+  function closePdfModal() {
+    $("#pdf-backdrop").classList.remove("open");
+    _pdfDoc = null;
+    _pdfPage = 1;
+    const c = $("#pdf-canvas");
+    c.width = 0; c.height = 0;
+  }
+  async function renderPdfPage() {
+    if (!_pdfDoc) return;
+    const page = await _pdfDoc.getPage(_pdfPage);
+    const area = $("#pdf-viewer-area");
+    const targetWidth = Math.min(area.clientWidth - 40, 900);
+    const baseViewport = page.getViewport({ scale: 1 });
+    const scale = targetWidth / baseViewport.width;
+    const viewport = page.getViewport({ scale });
+    const canvas = $("#pdf-canvas");
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+    const ctx = canvas.getContext("2d");
+    await page.render({ canvasContext: ctx, viewport }).promise;
+    $("#pdf-page").textContent = _pdfPage;
+    $("#pdf-prev").disabled = _pdfPage <= 1;
+    $("#pdf-next").disabled = _pdfPage >= _pdfDoc.numPages;
+  }
+  document.addEventListener("DOMContentLoaded", () => {
+    $("#pdf-prev").addEventListener("click", () => {
+      if (_pdfPage > 1) { _pdfPage--; renderPdfPage(); }
+    });
+    $("#pdf-next").addEventListener("click", () => {
+      if (_pdfDoc && _pdfPage < _pdfDoc.numPages) { _pdfPage++; renderPdfPage(); }
+    });
+  });
+
+  // ===== Email gate =====
+  function requireGate(callback) {
+    if (isUnlockedAny()) { callback(); return; }
+    const backdrop = $("#gate-backdrop");
+    backdrop.classList.add("open");
+    backdrop.dataset.afterUnlock = "yes";
+    backdrop._cb = callback;
+  }
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = $("#gate-form");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = $("#gate-name").value.trim();
+      const email = $("#gate-email").value.trim();
+      const consent = $("#gate-consent").checked;
+      const err = $("#gate-err");
+      err.textContent = "";
+      if (name.length < 2) { err.textContent = "Please enter your name."; return; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent = "Please enter a valid email address."; return; }
+      saveGate(name, email, consent);
+      const backdrop = $("#gate-backdrop");
+      backdrop.classList.remove("open");
+      const cb = backdrop._cb;
+      backdrop._cb = null;
+      if (typeof cb === "function") setTimeout(cb, 150);
+    });
+  });
+
+  // ===== Context-menu / drag protection on PDF viewer =====
+  function handleContextMenu(e) {
+    // Block right-click only inside the PDF viewer area
+    if (e.target && (e.target.closest("#pdf-viewer-area") || e.target.closest(".pdf-modal"))) {
+      e.preventDefault();
+      return false;
+    }
+    return true;
+  }
+  // Block common save shortcuts inside PDF modal
+  document.addEventListener("keydown", (e) => {
+    const pdfOpen = $("#pdf-backdrop").classList.contains("open");
+    if (!pdfOpen) return;
+    const k = e.key.toLowerCase();
+    if ((e.metaKey || e.ctrlKey) && (k === "s" || k === "p")) {
+      e.preventDefault();
+    }
+  });
+
+  // ===== Click outside modal to close =====
+  ["gate-backdrop", "pdf-backdrop", "video-backdrop"].forEach(id => {
+    const el = document.getElementById(id);
+    el.addEventListener("click", (e) => {
+      if (e.target === el) {
+        if (id === "video-backdrop") closeVideoModal();
+        else if (id === "pdf-backdrop") closePdfModal();
+        else if (id === "gate-backdrop") {
+          // Only let them dismiss the gate if they've already unlocked previously
+          if (isUnlockedAny()) el.classList.remove("open");
+        }
+      }
+    });
+  });
+
+  // ===== Utils =====
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, (m) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    })[m]);
+  }
+
+  // ===== Boot =====
+  applyConfig();
+</script>
+
+</body>
+</html>
