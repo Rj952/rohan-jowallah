@@ -582,6 +582,14 @@ const DEFAULTS = {
   ],
   FRAMEWORKS: [
     {
+      name: "The Dignity Framework — AI and the Care of Pastoral Care in Schools",
+      description: "Protecting student dignity in the age of AI — a framework for rethinking pastoral care in schools. Aligned with KCSiE 2025 and NAPCE.",
+      image: "https://drive.google.com/thumbnail?id=1U8nKXs98RW-HNl6tBPXj36CsJ8n8s8bp&sz=w800",
+      url:   "https://drive.google.com/file/d/1U8nKXs98RW-HNl6tBPXj36CsJ8n8s8bp/view?usp=sharing",
+      kind:  "pdf",
+      ribbon: "Framework"
+    },
+    {
       name: "The CARE Framework — Ethical AI Decision-Making Worksheet",
       description: "A guided worksheet for faculty to make ethical, evidence-informed decisions about integrating AI into teaching and learning. Walks through stakeholder analysis, bias examination, values alignment, and impact evaluation.",
       image: "https://drive.google.com/thumbnail?id=1CT6QbLJkXU2YySp4xhKyUM99gGx6vfhtPvsA4egjeZQ&sz=w800",
@@ -886,6 +894,7 @@ function frameworkCard(fw, idx) {
         <select data-k="kind">
           <option value="doc">Google Doc</option>
           <option value="sheet">Spreadsheet (Sheets / Excel)</option>
+          <option value="pdf">PDF (Drive or hosted)</option>
           <option value="external">Other (link)</option>
         </select>
       </div>

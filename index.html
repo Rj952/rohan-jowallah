@@ -439,6 +439,7 @@
   }
   .framework-card .fw-thumb .fw-icon.doc   { color: #2A6EE6; }
   .framework-card .fw-thumb .fw-icon.sheet { color: #0F8B47; }
+  .framework-card .fw-thumb .fw-icon.pdf   { color: #D03A2A; }
   .framework-card .ribbon {
     position: absolute; top: 12px; right: 12px;
     background: var(--turquoise);
@@ -1399,6 +1400,14 @@
   // kind: "doc" | "sheet" | "external"  (controls the icon)
   const FRAMEWORKS = [
     {
+      name: "The Dignity Framework — AI and the Care of Pastoral Care in Schools",
+      description: "Protecting student dignity in the age of AI — a framework for rethinking pastoral care in schools. Aligned with Keeping Children Safe in Education 2025 (DfE) and the National Association for Pastoral Care in Education (NAPCE).",
+      image: "https://drive.google.com/thumbnail?id=1U8nKXs98RW-HNl6tBPXj36CsJ8n8s8bp&sz=w800",
+      url:   "https://drive.google.com/file/d/1U8nKXs98RW-HNl6tBPXj36CsJ8n8s8bp/view?usp=sharing",
+      kind:  "pdf",
+      ribbon: "Framework"
+    },
+    {
       name: "The CARE Framework — Ethical AI Decision-Making Worksheet",
       description: "A guided worksheet for faculty to make ethical, evidence-informed decisions about integrating AI into teaching and learning. Walks through stakeholder analysis, bias examination, values alignment, and impact evaluation.",
       image: "https://drive.google.com/thumbnail?id=1CT6QbLJkXU2YySp4xhKyUM99gGx6vfhtPvsA4egjeZQ&sz=w800",
@@ -1645,8 +1654,8 @@
       card.setAttribute("aria-label", "Open " + fw.name);
 
       const kind = (fw.kind || "external").toLowerCase();
-      const iconLabel = kind === "doc" ? "DOC" : kind === "sheet" ? "XLS" : "LINK";
-      const iconClass = kind === "doc" ? "doc" : kind === "sheet" ? "sheet" : "";
+      const iconLabel = kind === "doc" ? "DOC" : kind === "sheet" ? "XLS" : kind === "pdf" ? "PDF" : "LINK";
+      const iconClass = kind === "doc" ? "doc" : kind === "sheet" ? "sheet" : kind === "pdf" ? "pdf" : "";
 
       const thumb = document.createElement("div");
       thumb.className = "fw-thumb";
