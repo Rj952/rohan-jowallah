@@ -1324,13 +1324,16 @@
   // For Vimeo:   id is the numeric video id
   // For file:    id is the URL to a .mp4 (must be hosted somewhere CORS-friendly)
   // Set VIDEO_OF_WEEK = null  (or change enabled: false) to hide the whole section.
+  // If a video has embedding disabled (YouTube Error 153), set openExternal: true so
+  // clicking the play button opens the video on youtube.com / vimeo.com in a new tab.
   const VIDEO_OF_WEEK = {
-    enabled:     true,
-    title:       "Video of the Week",
-    description: "This week's featured reel — click play to watch.",
-    type:        "youtube",        // "youtube" | "vimeo" | "file"
-    id:          "OLQok77eGwM",    // YouTube video ID from https://youtu.be/OLQok77eGwM
-    poster:      ""                // leave "" to auto-use YouTube thumbnail
+    enabled:      true,
+    title:        "When Intelligence Became Abundant",
+    description:  "Farewell to Traditional Universities — a Future-Ready Minds reflection on the AI age.",
+    type:         "youtube",
+    id:           "OLQok77eGwM",
+    poster:       "",
+    openExternal: true             // this video's owner has disabled embeds; open on YouTube
   };
 
   // ----- Apps -----
@@ -1807,6 +1810,15 @@
   }
 
   function openVideoModal() {
+    // If embedding is disabled for this video, open the native player in a new tab.
+    if (VIDEO_OF_WEEK.openExternal) {
+      let extUrl = "";
+      if (VIDEO_OF_WEEK.type === "youtube")      extUrl = `https://www.youtube.com/watch?v=${VIDEO_OF_WEEK.id}`;
+      else if (VIDEO_OF_WEEK.type === "vimeo")   extUrl = `https://vimeo.com/${VIDEO_OF_WEEK.id}`;
+      else                                       extUrl = VIDEO_OF_WEEK.id;
+      window.open(extUrl, "_blank", "noopener,noreferrer");
+      return;
+    }
     const frame = $("#video-modal-frame");
     frame.innerHTML = ""; // clear
     if (VIDEO_OF_WEEK.type === "youtube") {
