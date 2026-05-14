@@ -25,26 +25,35 @@
 
 <style>
   :root {
-    /* Caribbean Dusk palette — WCAG AA on white unless marked */
-    --turquoise:       #00696F;  /* 5.5:1 on white ✓ AA */
-    --turquoise-deep:  #004D52;  /* 8.7:1 on white ✓ AAA */
-    --sea:             #003D5B;  /* 12:1 on white ✓ AAA */
-    --coral:           #C44536;  /* 5.4:1 on white ✓ AA */
-    --coral-bright:    #D6663F;  /* large text / fill only — 3.9:1 */
-    --sunset:          #B5651D;  /* 5.5:1 on white ✓ AA */
-    --gold:            #9C6516;  /* light-bg amber — 5.6:1 on white ✓ AA */
-    --gold-on-dark:    #F4C430;  /* for accents on dark navy/teal — 8.6:1 on #003D5B ✓ */
-    --palm:            #1F6B41;  /* 5.9:1 on white ✓ AA */
-    --sand:            #FFF8EC;  /* warm cream bg */
-    --sand-warm:       #F5E8D0;  /* second cream */
-    --navy:            #0A1F2E;  /* near-black navy */
-    --ink:             #0A1F2E;  /* primary text — 17:1 on cream ✓ AAA */
-    --ink-soft:        #3D4F5C;  /* secondary text — 8.7:1 on cream ✓ AAA */
-    --focus-ring:      #F4C430;  /* high-vis focus outline */
+    /* Open University-inspired palette */
+    --ou-purple:       #322F62;  /* primary deep purple */
+    --ou-purple-deep:  #2A2A5E;
+    --ou-purple-dark:  #1F1D45;
+    --ou-teal:         #1FA890;  /* accent / CTA teal */
+    --ou-teal-dark:    #178572;
+    --ou-bg-lavender:  #E8E6F0;  /* light lavender section bg */
+    --ou-bg-soft:      #F4F2F8;
+
+    /* Mapped tokens (existing variables remap to OU palette) */
+    --turquoise:       #1FA890;
+    --turquoise-deep:  #178572;
+    --sea:             #322F62;
+    --coral:           #1FA890;
+    --coral-bright:    #1FA890;
+    --sunset:          #322F62;
+    --gold:            #322F62;
+    --gold-on-dark:    #FFFFFF;
+    --palm:            #4A4A6E;
+    --sand:            #FFFFFF;
+    --sand-warm:       #E8E6F0;
+    --navy:            #322F62;
+    --ink:             #1A1A2E;
+    --ink-soft:        #4A4A6E;
+    --focus-ring:      #1FA890;
     --white:           #FFFFFF;
-    --shadow-soft: 0 10px 30px rgba(10, 31, 46, 0.12);
-    --shadow-card: 0 14px 40px rgba(10, 31, 46, 0.18);
-    --radius: 18px;
+    --shadow-soft: 0 4px 14px rgba(26, 26, 46, 0.08);
+    --shadow-card: 0 10px 30px rgba(26, 26, 46, 0.12);
+    --radius: 14px;
   }
 
   /* Visible focus for keyboard navigation (accessibility) */
@@ -156,32 +165,11 @@
   /* ========== HERO ========== */
   .hero {
     position: relative;
-    min-height: 82vh;
+    min-height: 72vh;
     padding: 110px 24px 80px;
     color: var(--white);
     overflow: hidden;
-    /* Calm ocean gradient — deep navy at top, teal sea below */
-    background:
-      radial-gradient(ellipse at 80% 12%, rgba(244, 196, 48, 0.16) 0%, transparent 55%),
-      linear-gradient(180deg, #002B41 0%, #003D5B 35%, #00595E 75%, #00696F 100%);
-  }
-  .hero::before {
-    /* Subtle geometric grid overlay for a more corporate texture */
-    content: "";
-    position: absolute; inset: 0;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-    background-size: 64px 64px;
-    pointer-events: none;
-    mask-image: linear-gradient(180deg, rgba(0,0,0,0.6), transparent 70%);
-    -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,0.6), transparent 70%);
-  }
-  .hero::after {
-    content: "";
-    position: absolute;
-    left: 0; right: 0; bottom: -1px; height: 60px;
-    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60' preserveAspectRatio='none'><path fill='%23FFF8EC' d='M0,30 C360,60 720,0 1080,30 C1260,45 1380,40 1440,40 L1440,60 L0,60 Z'/></svg>") center/cover no-repeat;
+    background: var(--ou-purple);
   }
 
   /* AI badge — inline above hero tagline */
@@ -191,22 +179,18 @@
     gap: 8px;
     padding: 6px 14px 6px 10px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.14);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(244, 196, 48, 0.55);
+    background: rgba(31, 168, 144, 0.18);
+    border: 1px solid rgba(31, 168, 144, 0.65);
     color: var(--white);
     font-size: 0.78rem;
     font-weight: 800;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
     margin-bottom: 14px;
   }
   .ai-badge .ai-icon {
     width: 18px; height: 18px;
-    color: var(--gold-on-dark);
-    filter: drop-shadow(0 0 4px rgba(244, 196, 48, 0.55));
+    color: var(--ou-teal);
     animation: aiPulse 3.6s ease-in-out infinite;
   }
   @keyframes aiPulse {
@@ -255,21 +239,21 @@
     align-items: center;
     gap: 8px;
     padding: 14px 26px;
-    border-radius: 999px;
+    border-radius: 6px;
     border: none;
     font-family: inherit;
-    font-weight: 800;
+    font-weight: 700;
     font-size: 1rem;
     cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+    transition: transform 0.15s ease, background 0.15s ease;
     text-decoration: none;
   }
-  .btn-primary { background: var(--coral); color: var(--white); box-shadow: 0 8px 22px rgba(255,107,107,0.4); }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(255,107,107,0.55); }
-  .btn-ghost { background: rgba(255,255,255,0.18); color: var(--white); border: 1.5px solid rgba(255,255,255,0.55); }
-  .btn-ghost:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px); }
-  .btn-secondary { background: var(--navy); color: var(--white); }
-  .btn-secondary:hover { background: var(--sea); transform: translateY(-2px); }
+  .btn-primary { background: var(--ou-teal); color: var(--white); }
+  .btn-primary:hover { background: var(--ou-teal-dark); transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--white); border: 2px solid var(--white); }
+  .btn-ghost:hover { background: var(--white); color: var(--ou-purple); }
+  .btn-secondary { background: var(--ou-purple); color: var(--white); }
+  .btn-secondary:hover { background: var(--ou-purple-deep); }
 
   /* ========== SECTIONS ========== */
   section.block { padding: 80px 24px; }
@@ -277,17 +261,18 @@
   .section-head { text-align: center; margin-bottom: 48px; }
   .section-head .eyebrow {
     font-family: 'Nunito', sans-serif;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 800;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--turquoise-deep);
+    color: var(--ou-teal);
     display: inline-block;
     margin-bottom: 14px;
-    padding: 4px 12px;
-    background: rgba(0, 105, 111, 0.08);
-    border-radius: 999px;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
   }
+  .section-head h2 { font-weight: 800; }
   .section-head h2 { margin-bottom: 12px; }
   .section-head p { color: #3D4F5C; max-width: 620px; margin: 0 auto; }
   .app-card p, .pdf-card p { color: #3D4F5C; }
@@ -348,7 +333,7 @@
   .video-meta p { color: #4b6172; margin-bottom: 0; }
 
   /* ========== APPS GRID ========== */
-  .apps-section { background: var(--sand); }
+  .apps-section { background: var(--ou-bg-lavender); }
   .grid {
     display: grid;
     gap: 28px;
@@ -477,7 +462,7 @@
 
   /* ========== BOOKS ========== */
   .books-section {
-    background: linear-gradient(180deg, var(--sand) 0%, #ECF5F4 100%);
+    background: var(--white);
     border-top: 1px solid #E6ECF0;
   }
   .books-grid {
@@ -614,7 +599,7 @@
 
   /* ========== PDFs ========== */
   .pdf-section {
-    background: linear-gradient(180deg, var(--sand) 0%, #e6f7f4 100%);
+    background: var(--ou-bg-lavender);
   }
   .pdf-card {
     background: var(--white);
@@ -660,7 +645,7 @@
 
   /* ========== ABOUT ========== */
   .about-section {
-    background: linear-gradient(135deg, var(--sea) 0%, var(--turquoise-deep) 100%);
+    background: var(--ou-purple);
     color: white;
     text-align: center;
   }
@@ -706,7 +691,7 @@
   }
 
   /* ========== CONTACT ========== */
-  .contact-section { background: linear-gradient(180deg, var(--white) 0%, var(--sand) 100%); }
+  .contact-section { background: var(--ou-bg-lavender); }
   .contact-grid {
     display: grid;
     grid-template-columns: 1.5fr 1fr;
@@ -876,7 +861,7 @@
 
   /* Email gate modal */
   .gate-modal .gate-banner {
-    background: linear-gradient(135deg, var(--sunset), var(--coral));
+    background: var(--ou-purple);
     color: white;
     padding: 30px 28px;
     text-align: center;
@@ -1461,7 +1446,7 @@
       subtitle: "Critical Reflection for Transformation",
       author:   "Dr. Rohan Jowallah",
       year:     "",
-      image:    "https://m.media-amazon.com/images/I/41H4nK8diOL._SY445_SX342_QL70_FMwebp_.jpg",
+      image:    "https://m.media-amazon.com/images/I/61BjkrNaoPL._SY425_.jpg",
       url:      "https://www.amazon.com/s?k=Organizational+Inclusivity+Rohan+Jowallah",
       tone:     "coral",
       description: "A field guide for leaders building genuinely inclusive workplaces — grounded in critical reflection and practical transformation strategies."
@@ -1471,7 +1456,7 @@
       subtitle: "A Complete Workforce Guide to Working, Leading, and Thriving in the Age of Artificial Intelligence",
       author:   "Dr. Rohan Jowallah, Ed.D",
       year:     "",
-      image:    "https://m.media-amazon.com/images/I/61BjkrNaoPL._SY425_.jpg",
+      image:    "https://m.media-amazon.com/images/I/41H4nK8diOL._SY445_SX342_QL70_FMwebp_.jpg",
       url:      "https://www.amazon.com/s?k=AI-Ready+Workforce+Rohan+Jowallah",
       tone:     "teal",
       description: "An essential handbook for workers, leaders, and learners preparing for AI-augmented work — covering literacy, ethics, and the new skills the workforce needs now."
